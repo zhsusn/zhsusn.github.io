@@ -1,39 +1,9 @@
 baseURL = 'https://zhsusn.github.io'
 languageCode = 'zh-CN'
-title = 'Your Tech Blog'
-[module]
-  [[module.imports]]
-    path = "github.com/adityatelange/hugo-PaperMod"
+title = 'zhsusn Tech Blog'
+theme = 'PaperMod'
 
 [params]
   author = 'zhsusn'
   defaultTheme = 'auto'
   ShowReadingTime = true
-  ShowShareButtons = true
-  ShowPostNavLinks = true
-  googleAnalytics = ""  # 明确禁用，防止模板尝试加载
-  
-  [params.profileMode]
-    enabled = true
-    title = "架构设计与技术决策"
-    subtitle = "记录技术实践与架构思考"
-    imageUrl = "https://avatars.githubusercontent.com/u/yourid"
-    imageWidth = 150
-    imageHeight = 150
-
-[[menu.main]]
-  identifier = 'archives'
-  name = '归档'
-  url = '/archives/'
-  weight = 10
-
-[[menu.main]]
-  identifier = 'tags'
-  name = '标签'
-  url = '/tags/'
-  weight = 20
-  
-  
-[privacy]
-  [privacy.googleAnalytics]
-    disable = true  # 双重保险禁用
