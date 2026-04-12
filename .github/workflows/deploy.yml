@@ -11,13 +11,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive  # 关键：改为 recursive 而非 true，确保完整拉取
           fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.124.1'
+          hugo-version: '0.146.0'  # 关键：升级到 PaperMod 要求的最低版本
           extended: true
 
       - name: Build
