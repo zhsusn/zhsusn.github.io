@@ -9,6 +9,7 @@ theme = 'PaperMod'
   ShowReadingTime = true
   ShowShareButtons = true
   ShowPostNavLinks = true
+  googleAnalytics = ""  # 明确禁用，防止模板尝试加载
   
   [params.profileMode]
     enabled = true
@@ -29,3 +30,8 @@ theme = 'PaperMod'
   name = '标签'
   url = '/tags/'
   weight = 20
+  
+  
+[privacy]
+  [privacy.googleAnalytics]
+    disable = true  # 双重保险禁用
