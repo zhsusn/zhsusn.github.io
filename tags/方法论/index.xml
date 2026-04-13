@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>方法论 on zhsusn Tech Blog</title><link>https://zhsusn.github.io/tags/%E6%96%B9%E6%B3%95%E8%AE%BA/</link><description>Recent content in 方法论 on zhsusn Tech Blog</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 12 Apr 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://zhsusn.github.io/tags/%E6%96%B9%E6%B3%95%E8%AE%BA/index.xml" rel="self" type="application/rss+xml"/><item><title>AI编程六步法：从提示工程到系统架构</title><link>https://zhsusn.github.io/posts/ai-programming-six-steps/</link><pubDate>Sun, 12 Apr 2026 12:00:00 +0800</pubDate><guid>https://zhsusn.github.io/posts/ai-programming-six-steps/</guid><description>&lt;h2 id="背景"&gt;背景&lt;/h2&gt;
+&lt;p&gt;将之前整理的AI智力杠杆六步法改编成可执行的技术方案&amp;hellip;&lt;/p&gt;
+&lt;h2 id="六步法详解"&gt;六步法详解&lt;/h2&gt;
+&lt;h3 id="1-问题定义"&gt;1. 问题定义&amp;hellip;&lt;/h3&gt;
+&lt;p&gt;（正文使用标准Markdown，Obsidian双链语法&lt;code&gt;[[]]&lt;/code&gt;在发布时会被Hugo忽略或转换为链接）&lt;/p&gt;</description></item></channel></rss>
