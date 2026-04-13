@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/hello.md",
+                "file": "content/posts/ai-programming-six-steps.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "hello"
+              "title": "ai-programming-six-steps"
             }
           }
         ]
@@ -208,7 +208,7 @@
   },
   "active": "46e627089e7fbb33",
   "lastOpenFiles": [
-    "content/posts/hello-world.md",
-    "content/posts/hello.md"
+    "content/posts/hello.md",
+    "content/posts/hello-world.md"
   ]
 }
