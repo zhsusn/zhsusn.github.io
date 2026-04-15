@@ -2,11 +2,11 @@
 {{- $alt := .Text -}}
 {{- $title := .Title -}}
 
-{{/* 统一处理：去掉 /static/ 或 static/ 前缀（Obsidian 兼容）*/}}
-{{ $src = strings.TrimPrefix "/static/" $src }}
-{{ $src = strings.TrimPrefix "static/" $src }}
+{{/* 方法2：正则替换，更可靠 */}}
+{{ $src = replaceRE "^/static/" "/" $src }}
+{{ $src = replaceRE "^static/" "/" $src }}
 
-{{/* 如果不是绝对路径，添加 /images/ 前缀 */}}
+{{/* 如果不是绝对路径，添加 /images/ */}}
 {{ if not (strings.HasPrefix $src "/") }}
   {{ $src = printf "/images/%s" $src }}
 {{ end }}
@@ -14,5 +14,5 @@
 <img src="{{ $src }}" 
      alt="{{ $alt }}" 
      {{ with $title }}title="{{ . }}"{{ end }}
-     loading="lazy"
-     style="max-width: 100%; height: auto; border-radius: 4px;">
+     loading="lazy" 
+     style="max-width: 100%; height: auto;">
