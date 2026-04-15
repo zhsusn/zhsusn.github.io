@@ -90,17 +90,8 @@
 &lt;hr&gt;
 &lt;h2 id="二战略架构三层防御体系与平台矩阵"&gt;二、战略架构：三层防御体系与平台矩阵&lt;/h2&gt;
 &lt;h3 id="21-架构设计原则"&gt;2.1 架构设计原则&lt;/h3&gt;
-&lt;pre tabindex="0"&gt;&lt;code class="language-mermaid" data-lang="mermaid"&gt;graph TD
-A[生产层&amp;lt;br/&amp;gt;Obsidian本地知识库&amp;lt;br/&amp;gt;碎片化思考/双链笔记] --&amp;gt;|每周整理标准化| B[主权层&amp;lt;br/&amp;gt;独立博客&amp;lt;br/&amp;gt;SEO数字资产&amp;lt;br/&amp;gt;完整长文]
-B --&amp;gt;|48小时后差异化改编| C[流量层&amp;lt;br/&amp;gt;知乎观点节选]
-B --&amp;gt;|48小时后技术增强| D[流量层&amp;lt;br/&amp;gt;掘金实战代码]
-B --&amp;gt;|代码资产挂载| E[资产层&amp;lt;br/&amp;gt;GitHub仓库&amp;lt;br/&amp;gt;技术背书]
-B --&amp;gt;|月度聚合| F[触达层&amp;lt;br/&amp;gt;Newsletter&amp;lt;br/&amp;gt;算法免疫]
-C &amp;amp; D --&amp;gt;|高价值筛选| G[变现层&amp;lt;br/&amp;gt;知识星球&amp;lt;br/&amp;gt;深度解读]
-style B fill:#f96,stroke:#333,stroke-width:4px
-style A fill:#e1f5ff,stroke:#333
-style G fill:#ffe0b2,stroke:#333
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;关键约束&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;![[mermaid.png]]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关键约束&lt;/strong&gt;：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;单向流动原则&lt;/strong&gt;：禁止平台内容反向同步至博客，避免搜索引擎的重复内容惩罚（Duplicate Content Penalty）&lt;/p&gt;
