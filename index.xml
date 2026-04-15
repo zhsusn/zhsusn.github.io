@@ -90,7 +90,7 @@
 &lt;hr&gt;
 &lt;h2 id="二战略架构三层防御体系与平台矩阵"&gt;二、战略架构：三层防御体系与平台矩阵&lt;/h2&gt;
 &lt;h3 id="21-架构设计原则"&gt;2.1 架构设计原则&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-markdown" data-lang="markdown"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;![&lt;span style="color:#f92672"&gt;架构图&lt;/span&gt;](&lt;span style="color:#a6e22e"&gt;/static/images/architecture.png&lt;/span&gt;)
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-markdown" data-lang="markdown"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;![&lt;span style="color:#f92672"&gt;架构图&lt;/span&gt;](&lt;span style="color:#a6e22e"&gt;/images/architecture.png&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;![[architecture.png]]&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;关键约束&lt;/strong&gt;：&lt;/p&gt;
 &lt;ol&gt;
