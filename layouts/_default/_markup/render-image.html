@@ -2,13 +2,19 @@
 {{- $alt := .Text -}}
 {{- $title := .Title -}}
 
-{{/* 如果是相对路径如 static/images/xxx，转换为绝对路径 */}}
-{{ if strings.HasPrefix $src "static/" }}
+{{/* 处理 Obsidian 绝对路径：/static/images/xxx → /images/xxx */}}
+{{ if strings.HasPrefix $src "/static/" }}
+  {{ $src = strings.TrimPrefix "/static/" $src }}
+  {{ $src = printf "/%s" $src }}
+{{ end }}
+
+{{/* 处理相对路径（以防万一）：static/images/xxx → /images/xxx */}}
+{{ else if strings.HasPrefix $src "static/" }}
   {{ $src = strings.TrimPrefix "static/" $src }}
   {{ $src = printf "/%s" $src }}
 {{ end }}
 
-{{/* 如果是纯文件名，添加 /images/ 前缀 */}}
+{{/* 处理纯文件名：xxx.png → /images/xxx.png */}}
 {{ if not (strings.HasPrefix $src "/") }}
   {{ $src = printf "/images/%s" $src }}
 {{ end }}
