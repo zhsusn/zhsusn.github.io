@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/个人数字资产管理与品牌建设工程化方案.md",
+                "file": "content/posts/Hugo 静态博客 GitHub Pages 托管完整实施指南.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "个人数字资产管理与品牌建设工程化方案"
+              "title": "Hugo 静态博客 GitHub Pages 托管完整实施指南"
             }
           }
         ],
@@ -223,12 +223,13 @@
   },
   "active": "e0b499c1fbc896b7",
   "lastOpenFiles": [
+    "content/posts/个人数字资产管理与品牌建设工程化方案.md",
+    "content/posts/Hugo 静态博客 GitHub Pages 托管完整实施指南.md",
+    "content/posts/个人技术资产商业化战略白皮书.md",
     "layouts/_default/_markup/render-image.html.md",
     "layouts/_default/_markup/render-image.html",
-    "content/posts/个人数字资产管理与品牌建设工程化方案.md",
     "layouts/_default/_markup",
     "layouts/_default",
-    "content/posts/个人技术资产商业化战略白皮书.md",
     "static/images/architecture.png",
     "(/static/images/architecture.png).md",
     "(/static/images",
