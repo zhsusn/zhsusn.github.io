@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "48d02ae57332b4e8",
+        "id": "f177226bb9380345",
         "type": "tabs",
         "children": [
           {
-            "id": "46e627089e7fbb33",
+            "id": "863169b9aefac2b4",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "type": "split-diff-view",
+              "state": {
+                "aFile": ".obsidian/workspace.json",
+                "bFile": ".obsidian/workspace.json",
+                "aRef": ""
+              },
+              "icon": "diff",
+              "title": "Diff: workspace.json  (Working Tree)"
             }
           }
         ]
@@ -188,7 +192,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 313.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -202,8 +206,9 @@
       "bases:新建数据库": false
     }
   },
-  "active": "46e627089e7fbb33",
+  "active": "863169b9aefac2b4",
   "lastOpenFiles": [
+    "content/posts/全路径变现途径分析.md",
     "content/posts/hello.md",
     "content/posts/hello-world.md"
   ]
