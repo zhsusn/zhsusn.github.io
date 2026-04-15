@@ -1,14 +1,16 @@
-+++
-title = "Hugo 静态博客 GitHub Pages 托管完整实施指南"
-date = 2026-04-15T17:07:00+08:00
-draft = false
-tags = ["数字资产", "博客"]
-categories = ["数字资产"]
-description = "博客搭建详细步骤"
-+++
+
+---
+title: "Hugo 静态博客 GitHub Pages 托管完整实施指南"
+date: 2026-04-15T17:07:00+08:00
+draft: false
+tags: ["数字资产", "博客"]
+categories: ["数字资产"]
+description: "博客搭建详细步骤"
+---
 
 
-## 一、技术架构与核心原则
+
+## 一、技术架构与核心原则##
 
 ### 1.1 架构概览（Vendored 模式）
 
