@@ -11,14 +11,14 @@
             "id": "863169b9aefac2b4",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": ".obsidian/workspace.json",
-                "bFile": ".obsidian/workspace.json",
-                "aRef": ""
+                "file": "content/posts/全路径变现途径分析.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "diff",
-              "title": "Diff: workspace.json  (Working Tree)"
+              "icon": "lucide-file",
+              "title": "全路径变现途径分析"
             }
           }
         ]
@@ -208,6 +208,7 @@
   },
   "active": "863169b9aefac2b4",
   "lastOpenFiles": [
+    "content/posts/全路径变现途径分析2.md",
     "content/posts/全路径变现途径分析.md",
     "content/posts/hello.md",
     "content/posts/hello-world.md"
