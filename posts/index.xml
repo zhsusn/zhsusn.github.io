@@ -91,10 +91,10 @@
 &lt;h2 id="二战略架构三层防御体系与平台矩阵"&gt;二、战略架构：三层防御体系与平台矩阵&lt;/h2&gt;
 &lt;h3 id="21-架构设计原则"&gt;2.1 架构设计原则&lt;/h3&gt;
 &lt;p&gt;
-&lt;img src="https://zhsusn.github.io/images/images/architecture.png"
+&lt;img src="https://zhsusn.github.io/images/architecture.png"
 alt="架构图"
 loading="lazy"
-style="max-width: 100%; height: auto; border-radius: 4px;"&gt;&lt;/p&gt;
+style="max-width: 100%; height: auto;"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;关键约束&lt;/strong&gt;：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
