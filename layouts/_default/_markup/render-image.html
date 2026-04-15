@@ -1,0 +1,20 @@
+{{- $src := .Destination -}}
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+
+{{/* 如果是相对路径如 static/images/xxx，转换为绝对路径 */}}
+{{ if strings.HasPrefix $src "static/" }}
+  {{ $src = strings.TrimPrefix "static/" $src }}
+  {{ $src = printf "/%s" $src }}
+{{ end }}
+
+{{/* 如果是纯文件名，添加 /images/ 前缀 */}}
+{{ if not (strings.HasPrefix $src "/") }}
+  {{ $src = printf "/images/%s" $src }}
+{{ end }}
+
+<img src="{{ $src }}" 
+     alt="{{ $alt }}" 
+     {{ with $title }}title="{{ . }}"{{ end }}
+     loading="lazy"
+     style="max-width: 100%; height: auto; border-radius: 4px;">
