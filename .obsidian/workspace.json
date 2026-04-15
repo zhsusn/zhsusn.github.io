@@ -223,8 +223,12 @@
   },
   "active": "e0b499c1fbc896b7",
   "lastOpenFiles": [
-    "content/posts/个人技术资产商业化战略白皮书.md",
+    "layouts/_default/_markup/render-image.html.md",
+    "layouts/_default/_markup/render-image.html",
     "content/posts/个人数字资产管理与品牌建设工程化方案.md",
+    "layouts/_default/_markup",
+    "layouts/_default",
+    "content/posts/个人技术资产商业化战略白皮书.md",
     "static/images/architecture.png",
     "(/static/images/architecture.png).md",
     "(/static/images",
