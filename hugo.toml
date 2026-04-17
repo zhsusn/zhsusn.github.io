@@ -1,9 +1,106 @@
-baseURL = 'https://zhsusn.github.io'
+# ==================== 基础配置 ====================
+baseURL = 'https://zhsusn.github.io'  # 注意：已去除尾部空格，否则会导致 CSS 404
 languageCode = 'zh-CN'
 title = 'zhsusn Tech Blog'
 theme = 'PaperMod'
+paginate = 10  # 每页显示文章数
 
+# ==================== 站点参数 ====================
 [params]
+  # 站点元数据
   author = 'zhsusn'
+  description = "大数据架构师的技术沉淀 | 云原生、DevOps 与数据工程实践"
+  keywords = ["大数据", "架构设计", "云原生", "DevOps", "Hugo"]
+  
+  # 主题模式：auto（跟随系统）、dark（强制暗色）、light（强制亮色）
   defaultTheme = 'auto'
-  ShowReadingTime = true
+  
+  # 界面功能开关
+  ShowReadingTime = true        # 显示阅读时间
+  ShowShareButtons = true         # 显示分享按钮
+  ShowPostNavLinks = true         # 文章底部显示上一篇/下一篇
+  ShowBreadCrumbs = true          # 显示面包屑导航
+  ShowCodeCopyButtons = true      # 代码块显示复制按钮
+  ShowWordCount = true            # 显示字数统计
+  ShowRssButtonInSectionTermList = true  # 在标签/分类页显示 RSS 按钮
+  UseHugoToc = true               # 使用 Hugo 生成的目录
+  
+  # 评论系统（如需要，取消注释并配置）
+  # comments = true
+  
+  # 搜索功能配置（ Fuse.js ）
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = ["title", "permalink", "summary", "content"]
+  
+  # 首页个人资料模式（Profile Mode）- 替代默认文章列表
+  [params.profileMode]
+    enabled = true
+    title = "zhsusn"
+    subtitle = "大数据架构师 | 专注于云原生架构与数据工程实践\n记录技术沉淀与架构思考"
+    imageUrl = "/images/profile.png"  # 请将头像放入 static/images/ 目录
+    imageTitle = "头像"
+    imageWidth = 150
+    imageHeight = 150
+    # 按钮会自动居中显示
+    [[params.profileMode.buttons]]
+      name = "📚 技术文章"
+      url = "/posts/"
+    [[params.profileMode.buttons]]
+      name = "🏷️ 标签归档"
+      url = "/tags/"
+    [[params.profileMode.buttons]]
+      name = "👤 关于我"
+      url = "/about/"
+
+  # 自定义资源（可选，用于后续样式增强）
+  [params.assets]
+    customCSS = ["css/extended/custom.css"]  # 如有自定义样式，取消注释
+	customJS = ["js/extended/custom.js"]
+    # customJS = []
+	
+  
+
+# ==================== 导航菜单 ====================
+[menu]
+  [[menu.main]]
+    identifier = 'posts'
+    name = '📝 文章'
+    url = '/posts/'
+    weight = 10
+    
+  [[menu.main]]
+    identifier = 'tags'
+    name = '🏷️ 标签'
+    url = '/tags/'
+    weight = 20
+    
+  [[menu.main]]
+    identifier = 'search'
+    name = '🔍 搜索'
+    url = '/search/'
+    weight = 30
+    
+  [[menu.main]]
+    identifier = 'about'
+    name = '👤 关于'
+    url = '/about/'
+    weight = 40
+
+# ==================== 社交链接（页脚显示） ====================
+[[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/zhsusn"
+  
+[[params.socialIcons]]
+  name = "email"
+  url = "mailto:asen_ai@163.com"  # 替换为你的邮箱
+  
+[[params.socialIcons]]
+  name = "rss"
+  url = "index.xml"
