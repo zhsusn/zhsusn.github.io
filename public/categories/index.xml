@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Categories on zhsusn Tech Blog</title>
-    <link>http://localhost:63829/categories/</link>
+    <link>http://localhost:1313/categories/</link>
     <description>Recent content in Categories on zhsusn Tech Blog</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
     <lastBuildDate>Wed, 15 Apr 2026 15:29:32 +0800</lastBuildDate>
-    <atom:link href="http://localhost:63829/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>数字资产</title>
-      <link>http://localhost:63829/categories/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/</link>
+      <link>http://localhost:1313/categories/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/</link>
       <pubDate>Wed, 15 Apr 2026 15:29:32 +0800</pubDate>
-      <guid>http://localhost:63829/categories/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/</guid>
+      <guid>http://localhost:1313/categories/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/</guid>
       <description></description>
     </item>
   </channel>
