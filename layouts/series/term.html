@@ -1,0 +1,79 @@
+{{ define "main" }}
+
+<div class="max-w-4xl mx-auto px-4 py-12">
+    <!-- 系列头部 -->
+    <header class="mb-12 pb-8 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 mb-3">
+            <span>技术系列</span>
+            <span>/</span>
+            <span>{{ .Pages.Len }} 章</span>
+        </div>
+        <h1 class="text-4xl font-bold mb-4 text-slate-900 dark:text-slate-100">{{ .Title }}</h1>
+        <p class="text-lg text-slate-600 dark:text-slate-400 mb-6">{{ .Description }}</p>
+        
+        <!-- 进度条（如果系列有进度参数） -->
+        {{ with .Params.progress }}
+        <div class="mt-6">
+            <div class="flex justify-between text-sm mb-2 text-slate-600 dark:text-slate-400">
+                <span>系列完成度</span>
+                <span>{{ . }}%</span>
+            </div>
+            <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                <div class="bg-gradient-to-r from-blue-500 to-emerald-500 h-2 rounded-full" style="width: {{ . }}%"></div>
+            </div>
+        </div>
+        {{ end }}
+    </header>
+
+    <!-- 按卷分组显示 -->
+    {{ $volumes := dict }}
+    {{ range .Pages }}
+        {{ $vol := .Params.volume | default "未分类" }}
+        {{ $list := index $volumes $vol | default slice }}
+        {{ $list = $list | append . }}
+        {{ $volumes = merge $volumes (dict $vol $list) }}
+    {{ end }}
+
+    {{ range $volume, $pages := $volumes }}
+    <section class="mb-12">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-3 text-slate-800 dark:text-slate-200">
+            <span class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-lg">
+                📖
+            </span>
+            {{ $volume }}
+        </h2>
+        
+        <div class="space-y-3">
+            {{ range sort $pages "Params.chapter" }}
+            <a href="{{ .Permalink }}" class="group flex items-center p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:shadow-md transition-all">
+                <div class="w-16 text-right mr-4 flex-shrink-0">
+                    {{ if .Params.chapter }}
+                    <span class="text-sm font-mono text-slate-400 group-hover:text-blue-500 transition-colors">
+                        {{ .Params.chapter }}
+                    </span>
+                    {{ else }}
+                    <span class="text-sm text-slate-300">•</span>
+                    {{ end }}
+                </div>
+                
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
+                        {{ .Title }}
+                    </h3>
+                    <p class="text-sm text-slate-500 mt-1 line-clamp-1">
+                        {{ .Summary | default "暂无摘要" | plainify | truncate 100 }}
+                    </p>
+                </div>
+                
+                <div class="ml-4 text-xs text-slate-400 flex-shrink-0 text-right">
+                    <div>{{ .Date.Format "01-02" }}</div>
+                    <div class="mt-1">{{ .ReadingTime }} min</div>
+                </div>
+            </a>
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+</div>
+
+{{ end }}

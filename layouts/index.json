@@ -1,0 +1,18 @@
+{{- $.Scratch.Add "index" slice -}}
+{{- range $index, $element := (where .Site.AllPages "Type" "in" (slice "series" "standalone")) -}}
+    {{- if and (ne $element.Kind "section") (ne $element.Layout "search") -}}
+        {{- $.Scratch.Add "index" (dict 
+            "title" $element.Title 
+            "permalink" $element.Permalink 
+            "content" (plainify $element.Content)
+            "summary" (plainify $element.Summary)
+            "date" ($element.Date.Format "2006-01-02")
+            "series" ($element.Params.series | default "")
+            "volume" ($element.Params.volume | default "")
+            "chapter" ($element.Params.chapter | default "")
+            "tags" $element.Params.tags
+            "readingTime" $element.ReadingTime
+        ) -}}
+    {{- end -}}
+{{- end -}}
+{{- $.Scratch.Get "index" | jsonify -}}

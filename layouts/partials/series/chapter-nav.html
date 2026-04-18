@@ -1,0 +1,46 @@
+{{ if .Params.series }}
+{{ $series := .Params.series }}
+{{ $currentPage := . }}
+{{ $seriesPages := where .Site.Pages "Params.series" $series }}
+
+{{ if gt (len $seriesPages) 1 }}
+<div class="my-8 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-800">
+    <div class="flex items-center justify-between">
+        <!-- 上一章 -->
+        <div class="flex-1">
+            {{ range sort $seriesPages "Params.chapter" "asc" }}
+                {{ if and (lt .Params.chapter $currentPage.Params.chapter) (not .Draft) }}
+                    <a href="{{ .Permalink }}" class="group flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <div class="text-left">
+                            <div class="text-xs text-slate-400">上一章</div>
+                            <div class="font-medium truncate max-w-[150px]">{{ .Title }}</div>
+                        </div>
+                    </a>
+                {{ end }}
+            {{ end }}
+        </div>
+
+        <!-- 系列主页 -->
+        <a href="{{ .Site.GetPage (printf "/series/%s" $series).Permalink }}" class="mx-4 px-4 py-2 bg-white dark:bg-slate-700 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-600 transition-colors border border-slate-200 dark:border-slate-600">
+            📚 系列目录
+        </a>
+
+        <!-- 下一章 -->
+        <div class="flex-1 text-right">
+            {{ range sort $seriesPages "Params.chapter" "asc" }}
+                {{ if and (gt .Params.chapter $currentPage.Params.chapter) (not .Draft) }}
+                    <a href="{{ .Permalink }}" class="group flex items-center justify-end gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        <div class="text-right">
+                            <div class="text-xs text-slate-400">下一章</div>
+                            <div class="font-medium truncate max-w-[150px]">{{ .Title }}</div>
+                        </div>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                {{ end }}
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}
+{{ end }}

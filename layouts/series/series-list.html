@@ -1,0 +1,45 @@
+{{ define "main" }}
+
+<div class="max-w-5xl mx-auto px-4 py-12">
+    <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold mb-4">📚 技术系列</h1>
+        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            将零散的知识点组织为系统化的学习路径，每个系列都是一本正在撰写的技术书籍
+        </p>
+    </header>
+
+    <div class="grid md:grid-cols-2 gap-6">
+        {{ range .Site.Taxonomies.series }}
+        <a href="{{ .Page.Permalink }}" class="group block bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:border-blue-500 hover:shadow-lg transition-all">
+            <div class="h-32 bg-gradient-to-br from-blue-500 to-purple-600 relative overflow-hidden">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-4 left-4 text-white">
+                    <div class="text-3xl font-bold">{{ .Count }}</div>
+                    <div class="text-sm opacity-90">章</div>
+                </div>
+            </div>
+            <div class="p-6">
+                <h2 class="text-xl font-bold mb-2 text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {{ .Page.Title }}
+                </h2>
+                <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">
+                    {{ .Page.Description | default "暂无描述" }}
+                </p>
+                <div class="flex items-center justify-between text-xs text-slate-500">
+                    <span>最后更新 {{ .Page.Date.Format "2006-01-02" }}</span>
+                    <span class="text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform">查看全部 →</span>
+                </div>
+            </div>
+        </a>
+        {{ end }}
+    </div>
+
+    {{ if eq (len .Site.Taxonomies.series) 0 }}
+    <div class="text-center py-20 text-slate-500">
+        <p class="mb-4">暂无系列内容</p>
+        <p class="text-sm">请在文章 Front Matter 中添加 series 字段</p>
+    </div>
+    {{ end }}
+</div>
+
+{{ end }}
