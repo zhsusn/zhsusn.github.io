@@ -70,6 +70,15 @@ paginate = 10
     enableSeriesNavigation = true  # 启用系列导航
     enableChapterNumbering = true  # 启用章节编号
     showVolumeInList = true       # 列表中显示卷信息
+  [params.assets]
+  customCSS = [
+    "css/extended/typography.css",  # Phase 2: 印刷级排版
+    "css/extended/custom.css"       # Phase 1 的自定义样式
+  ]
+  customJS = [
+    "js/extended/reading.js",         # Phase 2: 阅读交互
+    "js/extended/theme.js"            # Phase 2: 主题管理
+  ]
 
 # ------------------- 输出配置 -------------------
 [outputs]

@@ -1,0 +1,491 @@
+/* ============================================
+   Phase 2: 印刷级中文排版系统
+   ============================================ */
+
+:root {
+  /* 字体栈 */
+  --font-serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-sans: 'Inter', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  
+  /* 亮模式：纸质感 */
+  --bg-primary: #fdfbf7;          /* 暖白色背景（类似宣纸）*/
+  --bg-secondary: #f5f5f0;        /* 次要背景 */
+  --bg-card: #ffffff;
+  --text-primary: #2c2c2c;        /* 墨黑色 */
+  --text-secondary: #5a5a5a;      /* 深灰 */
+  --text-muted: #8a8a8a;          /* 浅灰 */
+  --border-color: #e5e5e0;        /* 暖灰边框 */
+  --accent-blue: #2563eb;
+  --accent-green: #059669;
+  --link-color: #2563eb;
+  --link-hover: #1d4ed8;
+  
+  /* 代码块 */
+  --code-bg: #f5f5f5;
+  --code-text: #2c2c2c;
+}
+
+/* 暗模式：墨纸质感（降低对比度护眼） */
+.dark {
+  --bg-primary: #121212;          /* 深黑背景 */
+  --bg-secondary: #1e1e1e;        /* 次要背景 */
+  --bg-card: #1e1e1e;
+  --text-primary: #e7e7e7;        /* 浅灰白（非纯白，减少刺眼） */
+  --text-secondary: #b0b0b0;
+  --text-muted: #707070;
+  --border-color: #333333;
+  --accent-blue: #60a5fa;
+  --accent-green: #34d399;
+  --link-color: #60a5fa;
+  --link-hover: #93c5fd;
+  --code-bg: #2d2d2d;
+  --code-text: #e7e7e7;
+}
+
+/* 全局过渡动画 */
+body, .prose, .post-content, .post-title, .nav, .post-entry {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ============================================
+   正文排版：65字符最佳行长（黄金阅读宽度）
+   ============================================ */
+.post-content, .prose {
+  max-width: 65ch;                /* 65字符宽度（学术标准） */
+  margin-left: auto;
+  margin-right: auto;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;            /* 18px */
+  line-height: 1.8;               /* 中文 1.8 行高 */
+  color: var(--text-primary);
+  text-align: justify;            /* 两端对齐（印刷效果） */
+  text-justify: inter-ideograph;  /* 中文对齐优化 */
+  hanging-punctuation: first;     /* 标点悬挂（专业排版） */
+  orphans: 3;                     /* 防止孤行 */
+  widows: 3;                      /* 防止寡行 */
+}
+
+/* 移动端调整 */
+@media (max-width: 768px) {
+  .post-content, .prose {
+    font-size: 1.0625rem;         /* 17px */
+    line-height: 1.75;
+    text-align: left;             /* 移动端左对齐更易读 */
+  }
+}
+
+/* 段落间距 */
+.post-content p, .prose p {
+  margin-bottom: 1.5em;
+  margin-top: 0;
+  text-indent: 2em;               /* 首行缩进（中文传统） */
+}
+
+/* 取消特定元素后的缩进（现代排版惯例） */
+.post-content h1 + p,
+.post-content h2 + p,
+.post-content h3 + p,
+.post-content blockquote + p,
+.post-content ul + p,
+.post-content ol + p,
+.post-content .no-indent {
+  text-indent: 0;
+}
+
+/* ============================================
+   首字下沉（Drop Cap）- 书籍感
+   ============================================ */
+.post-content > p:first-of-type::first-letter,
+.prose > p:first-of-type::first-letter {
+  float: left;
+  font-size: 3.5em;
+  line-height: 0.8;
+  padding-right: 0.15em;
+  padding-top: 0.05em;
+  font-weight: 700;
+  color: var(--accent-blue);
+  font-family: var(--font-serif);
+}
+
+/* 暗色模式首字颜色调整 */
+.dark .post-content > p:first-of-type::first-letter,
+.dark .prose > p:first-of-type::first-letter {
+  color: var(--accent-blue);
+  opacity: 0.9;
+}
+
+/* 移动端取消首字下沉（避免排版混乱） */
+@media (max-width: 640px) {
+  .post-content > p:first-of-type::first-letter,
+  .prose > p:first-of-type::first-letter {
+    font-size: 1em;
+    float: none;
+    padding: 0;
+    color: inherit;
+  }
+}
+
+/* ============================================
+   标题样式：层次分明的字体大小写
+   ============================================ */
+.post-content h1, .prose h1 {
+  font-family: var(--font-sans);
+  font-size: 2.25rem;             /* 36px */
+  font-weight: 700;
+  margin-top: 2.5em;
+  margin-bottom: 0.8em;
+  line-height: 1.3;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.3em;
+}
+
+.post-content h2, .prose h2 {
+  font-family: var(--font-sans);
+  font-size: 1.75rem;             /* 28px */
+  font-weight: 600;
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+  line-height: 1.4;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* 章节编号样式 */
+.post-content h2 .chapter-num,
+.prose h2 .chapter-num {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--accent-blue);
+  font-weight: 700;
+  border: 2px solid var(--accent-blue);
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.post-content h3, .prose h3 {
+  font-family: var(--font-sans);
+  font-size: 1.375rem;            /* 22px */
+  font-weight: 600;
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
+  color: var(--text-primary);
+}
+
+.post-content h4, .prose h4 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: var(--text-secondary);
+}
+
+/* 标题锚点链接 */
+.post-content h1:hover a.anchor,
+.post-content h2:hover a.anchor,
+.post-content h3:hover a.anchor {
+  opacity: 1;
+}
+
+a.anchor {
+  opacity: 0;
+  margin-left: 0.5em;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: opacity 0.2s;
+}
+
+/* ============================================
+   边注（Margin Notes）- 学术风格
+   ============================================ */
+.margin-note {
+  float: right;
+  clear: right;
+  width: 240px;
+  margin-right: -280px;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;            /* 14px */
+  line-height: 1.6;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--accent-blue);
+  padding-left: 1rem;
+  background: var(--bg-secondary);
+  padding: 0.75rem 1rem;
+  border-radius: 0 8px 8px 0;
+  font-family: var(--font-sans);
+}
+
+/* 边注标签 */
+.margin-note::before {
+  content: "边注";
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  margin-bottom: 0.25rem;
+}
+
+/* 暗色模式边注 */
+.dark .margin-note {
+  background: rgba(255, 255, 255, 0.03);
+  border-left-color: var(--accent-blue);
+}
+
+/* 小屏幕：边注转为行内卡片 */
+@media (max-width: 1280px) {
+  .margin-note {
+    float: none;
+    width: 100%;
+    margin: 1.5rem 0;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-blue);
+  }
+}
+
+/* ============================================
+   引用块 - 强调样式
+   ============================================ */
+.post-content blockquote,
+.prose blockquote {
+  margin: 2em 0;
+  padding: 1.5em 2em;
+  border-left: 4px solid var(--accent-blue);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-style: italic;
+  border-radius: 0 12px 12px 0;
+  position: relative;
+}
+
+.post-content blockquote::before,
+.prose blockquote::before {
+  content: '"';
+  position: absolute;
+  top: 0.5rem;
+  left: 0.8rem;
+  font-size: 4rem;
+  color: var(--accent-blue);
+  opacity: 0.2;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.post-content blockquote p:last-child,
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+  text-indent: 0;
+}
+
+/* ============================================
+   列表样式
+   ============================================ */
+.post-content ul,
+.post-content ol,
+.prose ul,
+.prose ol {
+  margin: 1.5em 0;
+  padding-left: 2em;
+}
+
+.post-content li,
+.prose li {
+  margin-bottom: 0.75em;
+  line-height: 1.7;
+}
+
+.post-content ul li::marker,
+.prose ul li::marker {
+  color: var(--accent-blue);
+}
+
+.post-content ol li::marker,
+.prose ol li::marker {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ============================================
+   代码块 - 专业 IDE 风格
+   ============================================ */
+.post-content pre,
+.prose pre {
+  background: #1e1e1e !important;  /* 强制暗色背景（代码对比度） */
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 2em 0;
+  position: relative;
+  border: 1px solid #333;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 代码块顶部语言标识 */
+.post-content pre::before,
+.prose pre::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #888;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  border-radius: 0 0 0 8px;
+  letter-spacing: 0.05em;
+}
+
+.post-content pre code,
+.prose pre code {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #d4d4d4;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* 行内代码 */
+.post-content :not(pre) > code,
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.08);
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-weight: 500;
+}
+
+.dark .post-content :not(pre) > code,
+.dark .prose :not(pre) > code {
+  background: rgba(96, 165, 250, 0.15);
+  color: var(--accent-blue);
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+/* 代码复制按钮美化 */
+.copy-code {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.8rem !important;
+  opacity: 0;
+  transition: all 0.2s !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.post-content pre:hover .copy-code,
+.prose pre:hover .copy-code {
+  opacity: 1;
+}
+
+.copy-code:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ============================================
+   表格 - 学术风格
+   ============================================ */
+.post-content table,
+.prose table {
+  width: 100%;
+  margin: 2em 0;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  font-family: var(--font-sans);
+}
+
+.post-content th,
+.prose th {
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.post-content td,
+.prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.post-content tr:hover td,
+.prose tr:hover td {
+  background: var(--bg-secondary);
+}
+
+/* ============================================
+   分隔线 - 优雅样式
+   ============================================ */
+.post-content hr,
+.prose hr {
+  margin: 3em auto;
+  width: 60%;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+  position: relative;
+}
+
+.post-content hr::after,
+.prose hr::after {
+  content: '§';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-primary);
+  color: var(--text-muted);
+  padding: 0 1rem;
+  font-size: 1.2rem;
+}
+
+/* ============================================
+   图片 - 优雅展示
+   ============================================ */
+.post-content img,
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 2em auto;
+  display: block;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.post-content figcaption,
+.prose figcaption {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.5em;
+  font-family: var(--font-sans);
+}
+
+/* 暗色模式图片降低亮度 */
+.dark .post-content img,
+.dark .prose img {
+  opacity: 0.9;
+}

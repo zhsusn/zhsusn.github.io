@@ -116,7 +116,7 @@ SEO护城河：48小时原创保护期 &#43; 规范化的跨平台分发策略
 阶段一：生产层构思（Day 1-7）">
 <meta name="author" content="zhsusn">
 <link rel="canonical" href="http://localhost:1313/posts/%E4%B8%AA%E4%BA%BA%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E4%B8%8E%E5%93%81%E7%89%8C%E5%BB%BA%E8%AE%BE%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.9e010bc22ef5794c0560b82f657f315607f24d8b05e0088e95b900c22246f5c0.css" integrity="sha256-ngELwi71eUwFYLgvZX8xVgfyTYsF4AiOlbkAwiJG9cA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.db735074ab9fee5884ba717b38b2efbfc2a95089050aeeb5412eba8c42ad6644.css" integrity="sha256-23NQdKuf7liEunF7OLLvv8KpUIkFCu61QS66jEKtZkQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -171,6 +171,15 @@ SEO护城河：48小时原创保护期 &#43; 规范化的跨平台分发策略
     }
 
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+
+<div id="reading-progress" style="width: 0%; height: 3px; background: linear-gradient(90deg, #3b82f6, #10b981); position: fixed; top: 0; left: 0; z-index: 1000; transition: width 0.1s; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);"></div>
+
+
+<div id="focus-overlay" class="fixed inset-0 bg-black/0 pointer-events-none transition-all duration-500 z-30 hidden"></div>
 </head>
 <body id="top">
     <header class="header">
@@ -226,48 +235,89 @@ SEO护城河：48小时原创保护期 &#43; 规范化的跨平台分发策略
 </header>
 <main class="main">
 
-<article class="max-w-4xl mx-auto px-4 py-12">
+<article class="post-single max-w-5xl mx-auto px-4 py-8 relative">
+  
+  
+  <div class="fixed top-20 right-8 hidden xl:flex flex-col gap-3 z-40">
     
-    <nav class="mb-8 text-sm text-slate-500">
-        <a href="/" class="hover:text-blue-600">首页</a>
-        <span class="mx-2">/</span>
-        
-        <span class="text-slate-700 dark:text-slate-300">个人数字资产管理与品牌建设工程化方案</span>
-    </nav>
-
-    
-    <header class="mb-12">
-        
-
-        <h1 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100 leading-tight">
-            个人数字资产管理与品牌建设工程化方案
-        </h1>
-
-        <div class="flex items-center justify-between py-4 border-y border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
-            <div class="flex items-center gap-4">
-                <span class="flex items-center gap-1">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    2026-04-15
-                </span>
-                <span class="flex items-center gap-1">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    4 分钟阅读
-                </span>
-                
-            </div>
-            
-            <button onclick="toggleChapterNav()" class="sm:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
-        </div>
-    </header>
-
+    <button id="focus-mode-btn" onclick="toggleFocusMode()" 
+            class="p-3 bg-white dark:bg-slate-800 rounded-full shadow-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all hover:scale-110"
+            title="专注模式 (F)">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+      </svg>
+    </button>
     
     
-
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="p-3 bg-white dark:bg-slate-800 rounded-full shadow-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-all hover:scale-110"
+            title="回到顶部">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+      </svg>
+    </button>
     
-    <div class="prose prose-slate dark:prose-invert prose-lg max-w-none">
-        <h2 id="一执行摘要executive-summary">一、执行摘要（Executive Summary）</h2>
+    
+    <button onclick="shareArticle()" 
+            class="p-3 bg-white dark:bg-slate-800 rounded-full shadow-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-all hover:scale-110"
+            title="分享文章">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+      </svg>
+    </button>
+  </div>
+
+  
+  <nav class="mb-6 text-sm text-slate-500 font-sans flex items-center flex-wrap gap-2">
+    <a href="/" class="hover:text-blue-600 transition-colors">首页</a>
+    <span class="text-slate-300">/</span>
+    
+      <a href="/standalone/" class="hover:text-blue-600 transition-colors">随笔</a>
+    
+    <span class="text-slate-300">/</span>
+    <span class="text-slate-700 dark:text-slate-300 truncate max-w-[200px]">个人数字资产管理与品牌建设工程化方案</span>
+  </nav>
+
+  
+  <header class="mb-12 text-center max-w-3xl mx-auto">
+    
+
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-slate-900 dark:text-slate-100 leading-tight font-sans tracking-tight">
+      个人数字资产管理与品牌建设工程化方案
+    </h1>
+
+    <div class="flex items-center justify-center gap-4 text-sm text-slate-500 font-sans flex-wrap">
+      <span class="flex items-center gap-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        2026年4月15日
+      </span>
+      
+      
+      
+      <span class="text-slate-300">|</span>
+      <span class="flex items-center gap-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        4 分钟阅读
+      </span>
+      
+      
+    </div>
+    
+    
+    
+  </header>
+
+  
+  
+
+  
+  <div class="post-content" id="article-content">
+    <h2 id="一执行摘要executive-summary">一、执行摘要（Executive Summary）</h2>
 <p>本方案构建以<strong>独立博客为核心主权资产</strong>的内容生态系统，通过&quot;中心化存储、分布式触达、差异化呈现&quot;的三层架构，实现技术影响力资产的长期积累与复合增值。</p>
 <p><strong>核心机制</strong>：</p>
 <ul>
@@ -1050,28 +1100,136 @@ SEO护城河：48小时原创保护期 &#43; 规范化的跨平台分发策略
 <hr>
 <p><em>本文首发于<a href="https://zhsusn.github.io/">阿森</a>，转载请注明出处。</em></p>
 
+  </div>
+
+  
+  
+
+  
+  <footer class="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 max-w-3xl mx-auto">
+    
+    
+    <div class="flex flex-wrap gap-2 mb-8 justify-center">
+      
+      <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm font-sans hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+        #数字资产
+      </a>
+      
+      <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm font-sans hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+        #工程化方案
+      </a>
+      
+    </div>
+    
+
+    
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex gap-3">
+        <button onclick="likeArticle()" class="group flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+          <svg class="w-5 h-5 text-slate-500 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+          <span class="text-sm font-medium text-slate-700 dark:text-slate-300" id="like-count">收藏</span>
+        </button>
+        
+        <button onclick="toggleBookmark()" class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+          <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+          </svg>
+          <span class="text-sm font-medium text-slate-700 dark:text-slate-300">书签</span>
+        </button>
+      </div>
+      
+            
+      
     </div>
 
     
-    
-
-    
-    
-    <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
-        <div class="flex flex-wrap gap-2">
-            
-            <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                #数字资产
-            </a>
-            
-            <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                #工程化方案
-            </a>
-            
+    <div class="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+      <div class="flex items-start gap-4">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+          z
         </div>
+        <div class="flex-1">
+          <h4 class="font-bold text-lg text-slate-900 dark:text-slate-100 mb-1">zhsusn</h4>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-3 leading-relaxed">
+            大数据架构师的技术沉淀 | 云原生与数据工程实践
+          </p>
+          <div class="flex gap-4 text-sm">
+            <a href="/series/" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">查看全部系列</a>
+            <a href="https://github.com/zhsusn" target="_blank" class="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">GitHub</a>
+          </div>
+        </div>
+      </div>
     </div>
-    
+  </footer>
 </article>
+
+<script>
+
+function shareArticle() {
+  if (navigator.share) {
+    navigator.share({
+      title: '个人数字资产管理与品牌建设工程化方案',
+      url: window.location.href
+    });
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    showToast('链接已复制到剪贴板');
+  }
+}
+
+
+function likeArticle() {
+  const key = 'liked-http:\/\/localhost:1313\/posts\/%E4%B8%AA%E4%BA%BA%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E4%B8%8E%E5%93%81%E7%89%8C%E5%BB%BA%E8%AE%BE%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88\/';
+  const isLiked = localStorage.getItem(key);
+  const btn = document.querySelector('#like-count');
+  
+  if (!isLiked) {
+    localStorage.setItem(key, 'true');
+    btn.textContent = '已收藏';
+    btn.parentElement.classList.add('text-red-500');
+    showToast('已添加到收藏');
+  } else {
+    localStorage.removeItem(key);
+    btn.textContent = '收藏';
+    btn.parentElement.classList.remove('text-red-500');
+  }
+}
+
+
+function toggleBookmark() {
+  const pos = document.documentElement.scrollTop;
+  localStorage.setItem('bookmark-http:\/\/localhost:1313\/posts\/%E4%B8%AA%E4%BA%BA%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E4%B8%8E%E5%93%81%E7%89%8C%E5%BB%BA%E8%AE%BE%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88\/', pos);
+  showToast(`书签已保存（位置：${Math.round(pos)}px）`);
+}
+
+
+document.addEventListener('keydown', (e) => {
+  
+  if (e.key === 'f' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    toggleFocusMode();
+  }
+  
+  if (e.key === 'Escape') {
+    if (document.body.classList.contains('focus-mode')) {
+      toggleFocusMode();
+    }
+  }
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('liked-http:\/\/localhost:1313\/posts\/%E4%B8%AA%E4%BA%BA%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E4%B8%8E%E5%93%81%E7%89%8C%E5%BB%BA%E8%AE%BE%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88\/')) {
+    const btn = document.querySelector('#like-count');
+    if (btn) {
+      btn.textContent = '已收藏';
+      btn.parentElement.classList.add('text-red-500');
+    }
+  }
+});
+</script>
 
 
     </main>
