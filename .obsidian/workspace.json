@@ -223,6 +223,8 @@
   },
   "active": "e0b499c1fbc896b7",
   "lastOpenFiles": [
+    "public/downloads",
+    "static/downloads",
     "public/standalone/page/1/index.html",
     "public/standalone/page/1",
     "public/standalone/index.xml",
@@ -233,8 +235,6 @@
     "public/dashboard/index.html",
     "public/dashboard",
     "public/assets/css/stylesheet.d5e245367af70fba74b9f03f823c865cbdaaa691bbca80a40fd621e5f2c99e73.css",
-    "layouts/partials/comments.html",
-    "layouts/partials/新建 文本文档.txt",
     "content/dashboard.md",
     "public/images/profile.png",
     "public/images/architecture.png",
