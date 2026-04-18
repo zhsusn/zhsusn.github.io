@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>技术系列 on zhsusn Tech Blog</title>
+    <link>http://localhost:1313/series/</link>
+    <description>Recent content in 技术系列 on zhsusn Tech Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 15 Apr 2026 17:07:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/series/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>分布式系统架构</title>
+      <link>http://localhost:1313/series/distributed-systems/</link>
+      <pubDate>Wed, 15 Apr 2026 17:07:00 +0800</pubDate>
+      <guid>http://localhost:1313/series/distributed-systems/</guid>
+      <description>从理论到实践，系统构建分布式系统知识体系。涵盖一致性模型、微服务架构、云原生实践等核心主题。</description>
+    </item>
+  </channel>
+</rss>

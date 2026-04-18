@@ -1,11 +1,32 @@
-
 ---
 title: "Hugo 静态博客 GitHub Pages 托管完整实施指南"
 date: 2026-04-15T17:07:00+08:00
 draft: false
-tags: ["数字资产", "博客"]
+
+# 书籍化架构（核心）
+series: "distributed-systems"        # 系列名称（英文，用于 URL）
+volume: "vol-1-foundation"           # 卷标识
+chapter: 1                            # 章节序号
+
+# 可选：系列显示名称（如与文件名不同）
+seriesTitle: "分布式系统架构"
+volumeTitle: "基础理论"
+
+# 基础元数据
+tags: ["数字资产", "博客", "Hugo", "GitHub Pages"]
 categories: ["数字资产"]
-description: "博客搭建详细步骤"
+description: "从零搭建基于 Hugo + GitHub Pages 的技术博客完整指南，包含自动化部署与主题定制"
+
+# 学习辅助
+difficulty: "beginner"                # 难度：beginner/intermediate/advanced
+estimatedReadTime: 15
+prerequisites: []                      # 前置章节（可选）
+nextChapters: ["ch-2-advanced-hugo"] # 后续推荐（可选）
+
+# 封面图（可选）
+cover:
+  image: "/images/hugo-guide-cover.png"
+  alt: "Hugo 博客架构图"
 ---
 
 

@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>404 Page not found | zhsusn Tech Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="">
+<meta name="description" content="大数据架构师的技术沉淀 | 云原生与数据工程实践">
 <meta name="author" content="zhsusn">
 <link rel="canonical" href="http://localhost:1313/404.html">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.9e010bc22ef5794c0560b82f657f315607f24d8b05e0088e95b900c22246f5c0.css" integrity="sha256-ngELwi71eUwFYLgvZX8xVgfyTYsF4AiOlbkAwiJG9cA=" rel="preload stylesheet" as="style">
@@ -95,6 +95,26 @@
             </div>
         </div>
         <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/series/" title="📚 系列">
+                    <span>📚 系列</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/standalone/" title="📝 随笔">
+                    <span>📝 随笔</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="👤 关于">
+                    <span>👤 关于</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -118,6 +138,38 @@
         <polyline points="17 18 12 13 7 18"></polyline>
     </svg>
 </a>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const rssLink = document.querySelector('a[href*="index.xml"]');
+    if (rssLink) {
+        rssLink.setAttribute('target', '_blank');
+        rssLink.setAttribute('rel', 'noopener noreferrer');
+        rssLink.title = "RSS 订阅源（可用 RSS 阅读器订阅）";
+        
+        
+        rssLink.addEventListener('click', function(e) {
+            
+            if (!e.ctrlKey && !e.metaKey) {
+                const confirm = window.confirm(
+                    '📡 这是 RSS 订阅链接\n\n' +
+                    '你可以：\n' +
+                    '1. 复制当前地址到 RSS 阅读器（如 Feedly）\n' +
+                    '2. 直接打开查看 XML 源码\n\n' +
+                    '是否继续打开？'
+                );
+                if (!confirm) {
+                    e.preventDefault();
+                    
+                    navigator.clipboard.writeText(this.href).then(() => {
+                        alert('✅ RSS 链接已复制到剪贴板，请粘贴到你的 RSS 阅读器');
+                    });
+                }
+            }
+        });
+    }
+});
+</script>
 
 <script>
     let menu = document.getElementById('menu');

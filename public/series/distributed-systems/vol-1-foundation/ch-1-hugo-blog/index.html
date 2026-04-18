@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Hugo 静态博客 GitHub Pages 托管完整实施指南 | zhsusn Tech Blog</title>
+<meta name="keywords" content="数字资产, 博客, Hugo, GitHub Pages">
+<meta name="description" content="从零搭建基于 Hugo &#43; GitHub Pages 的技术博客完整指南，包含自动化部署与主题定制">
+<meta name="author" content="zhsusn">
+<link rel="canonical" href="http://localhost:1313/series/distributed-systems/vol-1-foundation/ch-1-hugo-blog/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9e010bc22ef5794c0560b82f657f315607f24d8b05e0088e95b900c22246f5c0.css" integrity="sha256-ngELwi71eUwFYLgvZX8xVgfyTYsF4AiOlbkAwiJG9cA=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/series/distributed-systems/vol-1-foundation/ch-1-hugo-blog/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="zhsusn Tech Blog (Alt + H)">zhsusn Tech Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/series/" title="📚 系列">
+                    <span>📚 系列</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/standalone/" title="📝 随笔">
+                    <span>📝 随笔</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="👤 关于">
+                    <span>👤 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="max-w-4xl mx-auto px-4 py-12">
+    
+    <nav class="mb-8 text-sm text-slate-500">
+        <a href="/" class="hover:text-blue-600">首页</a>
+        <span class="mx-2">/</span>
+        
+        <a href="/series/" class="hover:text-blue-600">系列</a>
+        <span class="mx-2">/</span>
+        
+        
+        <a href="http://localhost:1313/series/distributed-systems/" class="hover:text-blue-600">分布式系统架构</a>
+        <span class="mx-2">/</span>
+        
+        <span class="text-slate-700 dark:text-slate-300">Hugo 静态博客 GitHub Pages 托管完整实施指南</span>
+    </nav>
+
+    
+    <header class="mb-12">
+        
+        <div class="flex items-center gap-3 mb-4">
+            <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">
+                distributed-systems
+            </span>
+            
+            <span class="text-slate-400">/</span>
+            <span class="text-sm text-slate-600 dark:text-slate-400">vol-1-foundation</span>
+            
+            
+            <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded text-sm font-mono">
+                1
+            </span>
+            
+        </div>
+        
+
+        <h1 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100 leading-tight">
+            Hugo 静态博客 GitHub Pages 托管完整实施指南
+        </h1>
+
+        <div class="flex items-center justify-between py-4 border-y border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    2026-04-15
+                </span>
+                <span class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    5 分钟阅读
+                </span>
+                
+            </div>
+            
+            <button onclick="toggleChapterNav()" class="sm:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    
+    
+    
+
+
+
+
+
+
+    
+
+    
+    <div class="prose prose-slate dark:prose-invert prose-lg max-w-none">
+        <h2 id="一技术架构与核心原则">一、技术架构与核心原则##</h2>
+<h3 id="11-架构概览vendored-模式">1.1 架构概览（Vendored 模式）</h3>
+<p>本方案采用 <strong>GitHub Actions 自动化构建 + gh-pages 分支托管</strong> 的完全自动化部署架构，实现&quot;本地编写 → Git 推送 → 自动构建 → 线上生效&quot;的 DevOps 工作流。</p>
+<pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">graph LR
+    A[本地 Hugo 源码&lt;br/&gt;main 分支] --&gt;|Push 触发| B[GitHub Actions&lt;br/&gt;自动构建工作流]
+    B --&gt;|生成静态文件| C[gh-pages 分支&lt;br/&gt;纯 HTML/CSS/JS]
+    C --&gt;|Pages 服务读取| D[https://zhsusn.github.io&lt;br/&gt;CDN 加速]
+    
+    style A fill:#e1f5ff,stroke:#333
+    style B fill:#fff4e1,stroke:#333
+    style C fill:#ffcccc,stroke:#333,stroke-width:2px
+    style D fill:#90EE90,stroke:#333,stroke-width:2px
+</code></pre><h3 id="12-核心设计原则">1.2 核心设计原则</h3>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">原则</th>
+          <th style="text-align: left">方案选择</th>
+          <th style="text-align: left">技术考量</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>零外部依赖</strong></td>
+          <td style="text-align: left">主题直接嵌入仓库（Vendored Mode）</td>
+          <td style="text-align: left">避免 submodule 文件缺失、深度克隆失败、网络超时导致的构建不可复现</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>构建自动化</strong></td>
+          <td style="text-align: left">GitHub Actions 原生集成</td>
+          <td style="text-align: left">利用 <code>GITHUB_TOKEN</code> 自动权限，无需额外密钥配置</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>内容创作友好</strong></td>
+          <td style="text-align: left">Obsidian 本地 + Hugo 渲染钩子</td>
+          <td style="text-align: left">保留双链笔记习惯，通过渲染层自动转换 WikiLink 为标准 Markdown</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>100% 可复现</strong></td>
+          <td style="text-align: left">移除 Hugo Modules</td>
+          <td style="text-align: left">避免国内网络环境下模块拉取超时，确保任意环境构建一致性</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="二前置条件与基础设施准备">二、前置条件与基础设施准备</h2>
+<h3 id="21-开发环境要求">2.1 开发环境要求</h3>
+<p><strong>必需工具安装（Windows 环境）：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># 使用 winget 进行包管理（无需额外安装包管理器）</span>
+</span></span><span style="display:flex;"><span>winget install Hugo.Hugo.Extended
+</span></span><span style="display:flex;"><span>winget install Git.Git
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 版本验证（要求 v0.120.0+ 以支持现代渲染钩子）</span>
+</span></span><span style="display:flex;"><span>hugo version
+</span></span></code></pre></div><h3 id="22-github-仓库配置关键步骤">2.2 GitHub 仓库配置（关键步骤）</h3>
+<h4 id="仓库创建规范">仓库创建规范</h4>
+<p>访问 <code>https://github.com/new</code>，严格遵循以下命名规则：</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">配置项</th>
+          <th style="text-align: left">值</th>
+          <th style="text-align: left">约束说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Repository name</strong></td>
+          <td style="text-align: left"><code>zhsusn.github.io</code></td>
+          <td style="text-align: left"><strong>必须</strong>与 GitHub 用户名完全一致，区分大小写</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Visibility</strong></td>
+          <td style="text-align: left"><code>Public</code></td>
+          <td style="text-align: left">GitHub Pages 免费托管要求仓库公开</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Initialize with README</strong></td>
+          <td style="text-align: left">❌ 不勾选</td>
+          <td style="text-align: left">Hugo 自动生成首页，避免初始化冲突</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="权限预配置一次性部署前必须完成">权限预配置（一次性，部署前必须完成）</h4>
+<ol>
+<li>
+<p><strong>Actions 工作流权限</strong><br>
+访问 <code>https://github.com/zhsusn/zhsusn.github.io/settings/actions</code><br>
+设置：<code>Workflow permissions</code> → ✅ <code>Read and write permissions</code> → <strong>Save</strong></p>
+</li>
+<li>
+<p><strong>Pages 托管源配置</strong>（首次构建后设置）<br>
+访问 <code>https://github.com/zhsusn/zhsusn.github.io/settings/pages</code><br>
+设置：<code>Build and deployment</code> → <code>Source</code> → <code>Deploy from a branch</code><br>
+指定分支：<code>gh-pages</code> / <code>(root)</code></p>
+</li>
+</ol>
+<hr>
+<h2 id="三本地工程初始化">三、本地工程初始化</h2>
+<h3 id="31-项目结构搭建">3.1 项目结构搭建</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># 创建项目工作目录</span>
+</span></span><span style="display:flex;"><span>mkdir D:\data\blogs
+</span></span><span style="display:flex;"><span>cd D:\data\blogs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 初始化 Hugo 站点与 Git 仓库</span>
+</span></span><span style="display:flex;"><span>hugo new site .
+</span></span><span style="display:flex;"><span>git init
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 主题引入（Vendored 模式：直接克隆后移除 .git 历史）</span>
+</span></span><span style="display:flex;"><span>git clone --depth=<span style="color:#ae81ff">1</span> https<span style="color:#960050;background-color:#1e0010">:</span>//github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修复 PaperMod 主题已知缺陷（最新版缺失必要文件）</span>
+</span></span><span style="display:flex;"><span>New-Item -ItemType File -Path <span style="color:#e6db74">&#34;themes/PaperMod/layouts/partials/google_analytics.html&#34;</span> -Force
+</span></span><span style="display:flex;"><span>Set-Content -Path <span style="color:#e6db74">&#34;themes/PaperMod/layouts/partials/google_analytics.html&#34;</span> -Value <span style="color:#e6db74">&#34;{{- /* placeholder */ -}}&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 关键步骤：删除主题内嵌 Git 历史，使其成为普通文件夹</span>
+</span></span><span style="display:flex;"><span>Remove-Item -Recurse -Force themes/PaperMod/.git
+</span></span></code></pre></div><h3 id="32-站点基础配置hugotoml">3.2 站点基础配置（hugo.toml）</h3>
+<p>创建 <code>hugo.toml</code>（<strong>编码要求：UTF-8 无 BOM</strong>）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">baseURL</span> = <span style="color:#e6db74">&#39;https://zhsusn.github.io&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#39;zh-CN&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#39;zhsusn Tech Blog&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#39;PaperMod&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">author</span> = <span style="color:#e6db74">&#39;zhsusn&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">defaultTheme</span> = <span style="color:#e6db74">&#39;auto&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ShowReadingTime</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ShowShareButtons</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 增强：SEO 与社交媒体优化</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;技术架构与数据工程实践&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">keywords</span> = [<span style="color:#e6db74">&#34;大数据&#34;</span>, <span style="color:#e6db74">&#34;架构设计&#34;</span>, <span style="color:#e6db74">&#34;Hugo&#34;</span>, <span style="color:#e6db74">&#34;GitHub Pages&#34;</span>]
+</span></span></code></pre></div><h3 id="33-内容创建与本地验证">3.3 内容创建与本地验证</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># 创建内容目录结构</span>
+</span></span><span style="display:flex;"><span>New-Item -ItemType Directory -Path <span style="color:#e6db74">&#34;content/posts&#34;</span> -Force
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 生成首篇文章（自动创建 Front Matter）</span>
+</span></span><span style="display:flex;"><span>hugo new content posts/hello.md
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 编辑文章：将 draft: true 改为 draft: false</span>
+</span></span><span style="display:flex;"><span>notepad content/posts/hello.md
+</span></span></code></pre></div><p><strong>Front Matter 示例：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>title: &#34;Hello World&#34;
+</span></span><span style="display:flex;"><span>date: 2026-04-12T17:00:00+08:00
+</span></span><span style="display:flex;"><span>draft: false
+</span></span><span style="display:flex;"><span>tags: [&#34;hugo&#34;, &#34;github-pages&#34;]
+</span></span><span style="display:flex;"><span>categories: [&#34;技术基础设施&#34;]
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hello, this is my first post!
+</span></span></code></pre></div><p><strong>本地预览：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>hugo server -D
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 访问 http://localhost:1313/ 验证渲染正常后，Ctrl+C 停止服务</span>
+</span></span></code></pre></div><hr>
+<h2 id="四cicd-自动化部署配置">四、CI/CD 自动化部署配置</h2>
+<h3 id="41-github-actions-工作流">4.1 GitHub Actions 工作流</h3>
+<p>创建 <code>.github/workflows/deploy.yml</code>（<strong>复制即用，无需修改</strong>）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy to GitHub Pages</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">branches</span>: [ <span style="color:#ae81ff">main ] </span> <span style="color:#75715e"># 监听主分支推送事件</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">workflow_dispatch</span>:    <span style="color:#75715e"># 支持手动触发</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Checkout source code</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Setup Hugo</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">peaceiris/actions-hugo@v2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">hugo-version</span>: <span style="color:#e6db74">&#39;0.160.1&#39;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">extended</span>: <span style="color:#66d9ef">true</span>  <span style="color:#75715e"># 必需：支持 SCSS/SASS 处理</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build site</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">hugo --minify --gc </span> <span style="color:#75715e"># --gc 清理缓存，--minify 压缩资源</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy to gh-pages</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">peaceiris/actions-gh-pages@v3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">github_token</span>: <span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }} </span> <span style="color:#75715e"># 自动注入，无需配置</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">publish_dir</span>: <span style="color:#ae81ff">./public</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">cname</span>: <span style="color:#e6db74">&#39;&#39;</span>  <span style="color:#75715e"># 如需自定义域名，在此填写，如 &#39;blog.zhsusn.com&#39;</span>
+</span></span></code></pre></div><h3 id="42-首次部署流程">4.2 首次部署流程</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># 提交源码到主分支</span>
+</span></span><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;init: vendored Hugo blog with PaperMod theme&#34;</span>
+</span></span><span style="display:flex;"><span>git remote add origin https<span style="color:#960050;background-color:#1e0010">:</span>//github.com/zhsusn/zhsusn.github.io.git
+</span></span><span style="display:flex;"><span>git branch -M main
+</span></span><span style="display:flex;"><span>git push -u origin main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 备选：如遇企业防火墙限制，改用 SSH 协议</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># git remote set-url origin git@github.com:zhsusn/zhsusn.github.io.git</span>
+</span></span></code></pre></div><p><strong>部署验证步骤：</strong></p>
+<ol>
+<li>
+<p>访问仓库 <code>Actions</code> 标签页，确认工作流运行成功（绿色 ✓）</p>
+</li>
+<li>
+<p>等待 1-2 分钟，确认 <code>gh-pages</code> 分支已自动创建</p>
+</li>
+<li>
+<p>进入 <code>Settings</code> → <code>Pages</code>，确认 Source 指向 <code>gh-pages/(root)</code></p>
+</li>
+<li>
+<p>访问 <code>https://zhsusn.github.io</code>，验证 PaperMod 主题首页渲染正常</p>
+</li>
+</ol>
+<hr>
+<h2 id="五内容创作与资产管理">五、内容创作与资产管理</h2>
+<h3 id="51-标准发布工作流">5.1 标准发布工作流</h3>
+<p>日常发布仅需三步：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>cd D:\data\blogs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. 创建文章（自动生成标准 Front Matter）</span>
+</span></span><span style="display:flex;"><span>hugo new content posts/article-name.md
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. 编辑内容（修改 draft 状态，编写正文）</span>
+</span></span><span style="display:flex;"><span>code content/posts/article-name.md  <span style="color:#75715e"># 或 notepad/vim 等</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. 提交触发自动部署</span>
+</span></span><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;add: article-name - 文章标题简述&#34;</span>
+</span></span><span style="display:flex;"><span>git push origin main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 等待 1-2 分钟，线上自动更新（浏览器 Ctrl+F5 强制刷新）</span>
+</span></span></code></pre></div><h3 id="52-obsidian-集成与图片资产管理">5.2 Obsidian 集成与图片资产管理</h3>
+<p>为解决 Obsidian 双链笔记与 Hugo 标准 Markdown 的兼容性，实施以下分层处理策略：</p>
+<h4 id="obsidian-本地配置生产层">Obsidian 本地配置（生产层）</h4>
+<p><strong>路径设置：</strong></p>
+<ul>
+<li>
+<p>设置 → 文件与链接 → <strong>关闭「使用 Wiki 链接」</strong>（强制标准 Markdown 语法）</p>
+</li>
+<li>
+<p>设置 → 文件与链接 → 新笔记的存放位置 → <code>content/posts</code></p>
+</li>
+<li>
+<p>设置 → 文件与链接 → 附件默认存放路径 → <code>static/images</code></p>
+</li>
+</ul>
+<p><strong>粘贴图片流程：</strong></p>
+<ul>
+<li>
+<p>截图/复制图片 → Obsidian 中粘贴（Ctrl+V）</p>
+</li>
+<li>
+<p>图片自动复制至 <code>static/images/xxx.png</code></p>
+</li>
+<li>
+<p>自动生成标准语法：<code>![](static/images/xxx.png)</code></p>
+</li>
+</ul>
+<h4 id="hugo-渲染层增强转换层">Hugo 渲染层增强（转换层）</h4>
+<p>创建 <code>layouts/_default/_markup/render-image.html</code>，实现路径智能解析：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>{{- $src := .Destination -}}
+</span></span><span style="display:flex;"><span>{{- $alt := .Text -}}
+</span></span><span style="display:flex;"><span>{{- $title := .Title -}}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{{/* 路径标准化处理 */}}
+</span></span><span style="display:flex;"><span>{{ $src = replaceRE &#34;^/static/&#34; &#34;/&#34; $src }}
+</span></span><span style="display:flex;"><span>{{ $src = replaceRE &#34;^static/&#34; &#34;/&#34; $src }}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{{/* 相对路径自动补全为绝对路径 */}}
+</span></span><span style="display:flex;"><span>{{ if not (strings.HasPrefix $src &#34;/&#34;) }}
+</span></span><span style="display:flex;"><span>  {{ $src = printf &#34;/images/%s&#34; $src }}
+</span></span><span style="display:flex;"><span>{{ end }}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ $src }}&#34;</span> 
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ $alt }}&#34;</span> 
+</span></span><span style="display:flex;"><span>     <span style="color:#960050;background-color:#1e0010">{{</span> <span style="color:#a6e22e">with</span> <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#a6e22e">title</span> <span style="color:#960050;background-color:#1e0010">}}</span><span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ . }}&#34;</span><span style="color:#960050;background-color:#1e0010">{{</span> <span style="color:#a6e22e">end</span> <span style="color:#960050;background-color:#1e0010">}}</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">loading</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;lazy&#34;</span> 
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;max-width: 100%; height: auto; border-radius: 4px;&#34;</span>&gt;
+</span></span></code></pre></div><p><strong>转换逻辑说明：</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Obsidian 输入</th>
+          <th style="text-align: left">渲染钩子输出</th>
+          <th style="text-align: left">最终 HTML</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>![[architecture.png]]</code></td>
+          <td style="text-align: left"><code>![](architecture.png)</code></td>
+          <td style="text-align: left"><code>&lt;img src=&quot;/images/architecture.png&quot;&gt;</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>![](static/images/xxx.png)</code></td>
+          <td style="text-align: left">清洗 <code>static/</code> 前缀</td>
+          <td style="text-align: left"><code>&lt;img src=&quot;/images/xxx.png&quot;&gt;</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>![](/images/xxx.png)</code></td>
+          <td style="text-align: left">原样保留</td>
+          <td style="text-align: left"><code>&lt;img src=&quot;/images/xxx.png&quot;&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="六运维监控与故障排查">六、运维监控与故障排查</h2>
+<h3 id="61-构建前验证清单">6.1 构建前验证清单</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. 检查 WikiLink 残留（阻塞性错误）</span>
+</span></span><span style="display:flex;"><span>grep -r <span style="color:#e6db74">&#34;!\[\[&#34;</span> content/ <span style="color:#f92672">||</span> echo <span style="color:#e6db74">&#34;✓ WikiLink 语法检查通过&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. 本地构建验证（模拟生产环境）</span>
+</span></span><span style="display:flex;"><span>hugo --minify
+</span></span><span style="display:flex;"><span>ls -la public/images/  <span style="color:#75715e"># 确认图片资源已正确复制</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. 链接完整性检查（可选安装：hugo mod get github.com/chrede88/hugo-check)</span>
+</span></span></code></pre></div><h3 id="62-常见问题诊断速查表">6.2 常见问题诊断速查表</h3>
+<p>表格</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">故障现象</th>
+          <th style="text-align: left">根因分析</th>
+          <th style="text-align: left">解决方案</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Actions 工作流失败（红色 X）</strong></td>
+          <td style="text-align: left">PaperMod 主题缺失 <code>google_analytics.html</code></td>
+          <td style="text-align: left">创建空文件占位：见 3.1 节修复命令</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Actions 成功但站点 404</strong></td>
+          <td style="text-align: left">Pages Source 设置为 &ldquo;GitHub Actions&rdquo; 而非 &ldquo;Deploy from a branch&rdquo;</td>
+          <td style="text-align: left">进入 Settings → Pages，切换 Source 为 <code>gh-pages/(root)</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>hugo.toml 解析错误</strong></td>
+          <td style="text-align: left">文件编码含 BOM 头或使用中文字符标点</td>
+          <td style="text-align: left">记事本另存为 &ldquo;UTF-8&rdquo;，检查英文冒号/引号</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>本地正常，线上样式 404</strong></td>
+          <td style="text-align: left"><code>baseURL</code> 拼写错误或主题文件未提交</td>
+          <td style="text-align: left">确认 <code>baseURL</code> 含 <code>https://</code>，执行 <code>git add themes/</code> 后重推</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>推送超时/连接重置</strong></td>
+          <td style="text-align: left">企业防火墙拦截 HTTPS 443</td>
+          <td style="text-align: left">改用 SSH 协议：<code>git remote set-url origin git@github.com:zhsusn/zhsusn.github.io.git</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>图片线上不显示</strong></td>
+          <td style="text-align: left">路径含 <code>static</code> 前缀或大小写不匹配</td>
+          <td style="text-align: left">确认 5.2 节渲染钩子已提交，Linux 区分大小写</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="63-长期维护建议">6.3 长期维护建议</h3>
+<p><strong>缓存优化（可选增强）：</strong><br>
+在 <code>.github/workflows/deploy.yml</code> 的 Setup Hugo 步骤前添加：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Cache Hugo resources</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/cache@v4</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/tmp/hugo_cache</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">key</span>: <span style="color:#ae81ff">${{ runner.os }}-hugo-${{ hashFiles(&#39;go.sum&#39;) }}</span>
+</span></span></code></pre></div><p><strong>内容备份策略：</strong></p>
+<ul>
+<li>
+<p>源码层：Git 版本控制（main 分支）</p>
+</li>
+<li>
+<p>发布层：gh-pages 分支自动生成（无需手动干预）</p>
+</li>
+<li>
+<p>图片层：<code>static/images/</code> 随 Git 版本控制，或同步至对象存储（如阿里云 OSS）作为备份</p>
+</li>
+</ul>
+<hr>
+<h2 id="七附录核心文件模板汇总">七、附录：核心文件模板汇总</h2>
+<h3 id="a-最小化-hugotoml-配置">A. 最小化 hugo.toml 配置</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">baseURL</span> = <span style="color:#e6db74">&#39;https://zhsusn.github.io&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#39;zh-CN&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#39;zhsusn Tech Blog&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#39;PaperMod&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">author</span> = <span style="color:#e6db74">&#39;zhsusn&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">defaultTheme</span> = <span style="color:#e6db74">&#39;auto&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ShowReadingTime</span> = <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><h3 id="b-标准文章-front-matter">B. 标准文章 Front Matter</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">title</span>: <span style="color:#e6db74">&#34;文章标题&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">date</span>: <span style="color:#e6db74">2026-04-15T17:07:00</span><span style="color:#ae81ff">+08</span>:<span style="color:#ae81ff">00</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">draft</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">tags</span>: [<span style="color:#e6db74">&#34;标签1&#34;</span>, <span style="color:#e6db74">&#34;标签2&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">categories</span>: [<span style="color:#e6db74">&#34;分类名&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;文章摘要，用于 SEO 和列表展示&#34;</span>
+</span></span><span style="display:flex;"><span>---
+</span></span></code></pre></div><h3 id="c-网络超时备选方案ssh-配置">C. 网络超时备选方案（SSH 配置）</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># 生成 SSH 密钥对（如未配置）</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -t ed25519 -C <span style="color:#e6db74">&#34;your@email.com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 添加公钥到 GitHub → Settings → SSH and GPG keys</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改远程 URL 为 SSH 协议</span>
+</span></span><span style="display:flex;"><span>git remote set-url origin git@github.com<span style="color:#960050;background-color:#1e0010">:</span>zhsusn/zhsusn.github.io.git
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 验证连接</span>
+</span></span><span style="display:flex;"><span>ssh -T git@github.com
+</span></span></code></pre></div><hr>
+<p><strong>文档特性总结：</strong> 本方案采用 <strong>Vendored 依赖管理</strong> 与 <strong>Render Hook 内容转换</strong> 双重策略，在保证构建可复现性的同时，最大化保留原有 Obsidian 写作习惯。通过 GitHub Actions 原生集成，实现零服务器成本、零密钥配置的完全自动化内容发布管道。</p>
+
+    </div>
+
+    
+    
+    
+
+
+
+
+
+
+    
+
+    
+    
+    <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
+        <div class="flex flex-wrap gap-2">
+            
+            <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                #数字资产
+            </a>
+            
+            <a href="/tags/%E5%8D%9A%E5%AE%A2" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                #博客
+            </a>
+            
+            <a href="/tags/hugo" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                #Hugo
+            </a>
+            
+            <a href="/tags/github-pages" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                #GitHub Pages
+            </a>
+            
+        </div>
+    </div>
+    
+</article>
+
+
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">zhsusn Tech Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const rssLink = document.querySelector('a[href*="index.xml"]');
+    if (rssLink) {
+        rssLink.setAttribute('target', '_blank');
+        rssLink.setAttribute('rel', 'noopener noreferrer');
+        rssLink.title = "RSS 订阅源（可用 RSS 阅读器订阅）";
+        
+        
+        rssLink.addEventListener('click', function(e) {
+            
+            if (!e.ctrlKey && !e.metaKey) {
+                const confirm = window.confirm(
+                    '📡 这是 RSS 订阅链接\n\n' +
+                    '你可以：\n' +
+                    '1. 复制当前地址到 RSS 阅读器（如 Feedly）\n' +
+                    '2. 直接打开查看 XML 源码\n\n' +
+                    '是否继续打开？'
+                );
+                if (!confirm) {
+                    e.preventDefault();
+                    
+                    navigator.clipboard.writeText(this.href).then(() => {
+                        alert('✅ RSS 链接已复制到剪贴板，请粘贴到你的 RSS 阅读器');
+                    });
+                }
+            }
+        });
+    }
+});
+</script>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

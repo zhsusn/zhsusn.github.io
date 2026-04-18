@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto" data-theme="auto">
 
-<head>
-	<meta name="generator" content="Hugo 0.160.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>zhsusn Tech Blog</title>
-<meta name="keywords" content="大数据, 架构设计, 云原生, DevOps">
+<title>数字资产 | zhsusn Tech Blog</title>
+<meta name="keywords" content="">
 <meta name="description" content="大数据架构师的技术沉淀 | 云原生与数据工程实践">
 <meta name="author" content="zhsusn">
-<link rel="canonical" href="http://localhost:1313/">
+<link rel="canonical" href="http://localhost:1313/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.9e010bc22ef5794c0560b82f657f315607f24d8b05e0088e95b900c22246f5c0.css" integrity="sha256-ngELwi71eUwFYLgvZX8xVgfyTYsF4AiOlbkAwiJG9cA=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
@@ -19,9 +18,8 @@
 <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/index.xml" title="rss">
-<link rel="alternate" type="application/json" href="http://localhost:1313/index.json" title="json">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/index.xml" title="rss">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7/">
 <noscript>
     <style>
         #theme-toggle,
@@ -122,8 +120,36 @@
     </nav>
 </header>
 <main class="main"> 
+<header class="page-header"><nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    <a href='http://localhost:1313/'>Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="http://localhost:1313/tags/">Tags</a></nav>
+  <h1>
+    数字资产
+  </h1>
+</header>
 
-<article class="first-entry"> 
+<article class="post-entry tag-entry"> 
+<figure class="entry-cover">
+        <img loading="lazy" src="http://localhost:1313/images/hugo-guide-cover.png" alt="Hugo 博客架构图">
+</figure>
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Hugo 静态博客 GitHub Pages 托管完整实施指南
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>一、技术架构与核心原则## 1.1 架构概览（Vendored 模式） 本方案采用 GitHub Actions 自动化构建 &#43; gh-pages 分支托管 的完全自动化部署架构，实现&#34;本地编写 → Git 推送 → 自动构建 → 线上生效&#34;的 DevOps 工作流。
+graph LR A[本地 Hugo 源码&lt;br/&gt;main 分支] --&gt;|Push 触发| B[GitHub Actions&lt;br/&gt;自动构建工作流] B --&gt;|生成静态文件| C[gh-pages 分支&lt;br/&gt;纯 HTML/CSS/JS] C --&gt;|Pages 服务读取| D[https://zhsusn.github.io&lt;br/&gt;CDN 加速] style A fill:#e1f5ff,stroke:#333 style B fill:#fff4e1,stroke:#333 style C fill:#ffcccc,stroke:#333,stroke-width:2px style D fill:#90EE90,stroke:#333,stroke-width:2px 1.2 核心设计原则 原则 方案选择 技术考量 零外部依赖 主题直接嵌入仓库（Vendored Mode） 避免 submodule 文件缺失、深度克隆失败、网络超时导致的构建不可复现 构建自动化 GitHub Actions 原生集成 利用 GITHUB_TOKEN 自动权限，无需额外密钥配置 内容创作友好 Obsidian 本地 &#43; Hugo 渲染钩子 保留双链笔记习惯，通过渲染层自动转换 WikiLink 为标准 Markdown 100% 可复现 移除 Hugo Modules 避免国内网络环境下模块拉取超时，确保任意环境构建一致性 二、前置条件与基础设施准备 2.1 开发环境要求 必需工具安装（Windows 环境）：
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-04-15 17:07:00 +0800 CST'>April 15, 2026</span>&nbsp;·&nbsp;<span>5 min</span>&nbsp;·&nbsp;<span>zhsusn</span></footer>
+  <a class="entry-link" aria-label="post link to Hugo 静态博客 GitHub Pages 托管完整实施指南" href="http://localhost:1313/series/distributed-systems/vol-1-foundation/ch-1-hugo-blog/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">个人技术资产商业化战略白皮书
     </h2>
@@ -147,7 +173,7 @@
   <a class="entry-link" aria-label="post link to 个人技术资产商业化战略白皮书" href="http://localhost:1313/posts/%E4%B8%AA%E4%BA%BA%E6%8A%80%E6%9C%AF%E8%B5%84%E4%BA%A7%E5%95%86%E4%B8%9A%E5%8C%96%E6%88%98%E7%95%A5%E7%99%BD%E7%9A%AE%E4%B9%A6/"></a>
 </article>
 
-<article class="post-entry"> 
+<article class="post-entry tag-entry"> 
   <header class="entry-header">
     <h2 class="entry-hint-parent">个人数字资产管理与品牌建设工程化方案
     </h2>
