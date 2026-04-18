@@ -1,0 +1,158 @@
+/* ============================================
+   Phase 4: 印刷级打印样式
+   浏览器 Ctrl+P → 保存为 PDF 即可获得书籍
+   ============================================ */
+
+@media print {
+  /* 隐藏所有非内容元素 */
+  nav, 
+  aside, 
+  .post-footer, 
+  .comments, 
+  #graph-widget, 
+  #reading-progress,
+  #theme-toggle,
+  #focus-mode-btn,
+  .pagination,
+  .related-posts,
+  button,
+  .copy-code {
+    display: none !important;
+  }
+
+  /* 基础页面设置 */
+  @page {
+    size: A4;
+    margin: 2.5cm 2cm;
+    
+    @top-center {
+      content: string(chapter-title);
+      font-size: 9pt;
+      color: #666;
+    }
+    
+    @bottom-center {
+      content: counter(page);
+      font-size: 9pt;
+    }
+  }
+
+  /* 正文优化 */
+  body {
+    font-family: "Noto Serif CJK SC", "Source Han Serif SC", serif;
+    font-size: 11pt;
+    line-height: 1.8;
+    color: #000;
+    background: #fff;
+  }
+
+  /* 标题样式 */
+  h1 {
+    string-set: chapter-title content();
+    page-break-before: always;
+    font-size: 22pt;
+    margin-bottom: 1.5em;
+    border-bottom: 2pt solid #333;
+    padding-bottom: 0.3em;
+  }
+
+  h2 {
+    font-size: 16pt;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 13pt;
+    margin-top: 1.2em;
+    page-break-after: avoid;
+  }
+
+  /* 防止孤行寡行 */
+  p {
+    orphans: 3;
+    widows: 3;
+    text-align: justify;
+    text-indent: 2em;
+    margin-bottom: 0.8em;
+  }
+
+  /* 代码块打印优化 */
+  pre {
+    background: #f5f5f5 !important;
+    border: 1pt solid #ddd;
+    page-break-inside: avoid;
+    font-size: 9pt;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9pt;
+  }
+
+  /* 表格 */
+  table {
+    page-break-inside: avoid;
+    font-size: 10pt;
+  }
+
+  /* 图片 */
+  img {
+    max-width: 100%;
+    page-break-inside: avoid;
+    page-break-before: auto;
+  }
+
+  /* 引用块 */
+  blockquote {
+    border-left: 3pt solid #333;
+    padding-left: 1em;
+    margin-left: 0;
+    color: #333;
+  }
+
+  /* 链接：显示 URL */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #666;
+    word-break: break-all;
+  }
+
+  /* 内部锚点链接不显示 URL */
+  a[href^="#"]::after {
+    content: "";
+  }
+
+  /* 封面页（系列首页打印时） */
+  .series-header {
+    text-align: center;
+    page-break-after: always;
+    padding-top: 30%;
+  }
+
+  .series-header h1 {
+    border: none;
+    font-size: 28pt;
+  }
+
+  /* 目录页 */
+  .toc {
+    page-break-after: always;
+  }
+
+  /* 章节卡片网格改为列表 */
+  .grid {
+    display: block;
+  }
+
+  .grid > * {
+    margin-bottom: 1em;
+    border: 1pt solid #ddd;
+    padding: 1em;
+  }
+}

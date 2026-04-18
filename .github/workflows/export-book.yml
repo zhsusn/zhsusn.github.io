@@ -1,0 +1,128 @@
+name: Export Series to E-book
+
+on:
+  workflow_dispatch:      # 手动触发
+    inputs:
+      series_name:
+        description: '系列名称 (如: distributed-systems)'
+        required: true
+        default: 'distributed-systems'
+      format:
+        description: '导出格式'
+        required: true
+        default: 'pdf'
+        type: choice
+        options:
+          - pdf
+          - epub
+          - markdown
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.160.1'
+          extended: true
+      
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex texlive-lang-chinese fonts-noto-cjk
+          
+      - name: Build Site
+        run: hugo --minify
+      
+      - name: Export Book
+        run: |
+          mkdir -p static/downloads
+          
+          SERIES="${{ github.event.inputs.series_name }}"
+          FORMAT="${{ github.event.inputs.format }}"
+          DATE=$(date +%Y%m%d)
+          
+          # 收集章节文件
+          TEMP_FILE="/tmp/${SERIES}-book.md"
+          META_FILE="/tmp/${SERIES}-meta.yaml"
+          
+          # 提取系列元数据
+          INDEX_FILE="content/series/${SERIES}/_index.md"
+          SERIES_TITLE=$(grep -oP 'title:\s*"\K[^"]+' "$INDEX_FILE" || echo "$SERIES")
+          SERIES_DESC=$(grep -oP 'description:\s*"\K[^"]+' "$INDEX_FILE" || echo "")
+          
+          cat > "$META_FILE" <<EOF
+---
+title: "$SERIES_TITLE"
+subtitle: "$SERIES_DESC"
+author: "zhsusn"
+date: "$(date +%Y年%m月%d日)"
+lang: zh-CN
+---
+EOF
+          
+          # 按章节排序合并
+          echo "---" > "$TEMP_FILE"
+          cat "$META_FILE" >> "$TEMP_FILE"
+          echo "---" >> "$TEMP_FILE"
+          echo "" >> "$TEMP_FILE"
+          echo "# $SERIES_TITLE" >> "$TEMP_FILE"
+          echo "" >> "$TEMP_FILE"
+          echo "> $SERIES_DESC" >> "$TEMP_FILE"
+          echo "" >> "$TEMP_FILE"
+          echo "\\newpage" >> "$TEMP_FILE"
+          echo "" >> "$TEMP_FILE"
+          
+          # 排序并追加各章节
+          for file in $(find "content/series/${SERIES}" -name "*.md" -not -name "_index.md" | sort -V); do
+            # 提取章节号用于排序（简单实现）
+            CHAPTER=$(grep -oP '^chapter:\s*\K\d+' "$file" || echo "99")
+            
+            # 移除 Front Matter，只保留正文
+            sed -n '/^---$/,/^---$/!p' "$file" >> "$TEMP_FILE"
+            echo "" >> "$TEMP_FILE"
+            echo "\\newpage" >> "$TEMP_FILE"
+            echo "" >> "$TEMP_FILE"
+          done
+          
+          # 导出
+          OUTPUT="static/downloads/${SERIES}-${DATE}.${FORMAT}"
+          
+          if [ "$FORMAT" = "pdf" ]; then
+            pandoc "$TEMP_FILE" \
+              -o "$OUTPUT" \
+              --pdf-engine=xelatex \
+              -V CJKmainfont="Noto Sans CJK SC" \
+              -V geometry:margin=2.5cm \
+              --toc \
+              --toc-depth=2 \
+              --number-sections \
+              --highlight-style=tango
+          elif [ "$FORMAT" = "epub" ]; then
+            pandoc "$TEMP_FILE" \
+              -o "$OUTPUT" \
+              --toc \
+              --toc-depth=2 \
+              --epub-metadata="$META_FILE"
+          else
+            cp "$TEMP_FILE" "$OUTPUT"
+          fi
+          
+          echo "exported_file=$OUTPUT" >> $GITHUB_ENV
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-export-${{ github.event.inputs.series_name }}
+          path: static/downloads/
+          
+      - name: Commit Download Link
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add static/downloads/
+          git commit -m "chore: auto-export ${{ github.event.inputs.series_name }} book [skip ci]" || exit 0
+          git push

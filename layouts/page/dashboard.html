@@ -1,0 +1,86 @@
+{{ define "main" }}
+
+<div class="max-w-4xl mx-auto px-4 py-12">
+  <h1 class="text-3xl font-bold mb-8 text-slate-900 dark:text-slate-100">📊 阅读仪表盘</h1>
+  
+  <!-- 统计卡片 -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="text-3xl font-bold text-blue-600" id="stat-articles">-</div>
+      <div class="text-sm text-slate-500 mt-1">阅读文章</div>
+    </div>
+    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="text-3xl font-bold text-emerald-600" id="stat-time">-</div>
+      <div class="text-sm text-slate-500 mt-1">阅读时长(分)</div>
+    </div>
+    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="text-3xl font-bold text-purple-600" id="stat-streak">-</div>
+      <div class="text-sm text-slate-500 mt-1">连续天数</div>
+    </div>
+    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="text-3xl font-bold text-amber-600" id="stat-level">-</div>
+      <div class="text-sm text-slate-500 mt-1">读者等级</div>
+    </div>
+  </div>
+
+  <!-- 系列进度 -->
+  <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 mb-8">
+    <h2 class="text-xl font-bold mb-6 text-slate-900 dark:text-slate-100">系列学习进度</h2>
+    <div id="series-progress" class="space-y-4">
+      <p class="text-slate-500 text-center py-8">加载中...</p>
+    </div>
+  </div>
+
+  <!-- 最近阅读 -->
+  <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
+    <h2 class="text-xl font-bold mb-6 text-slate-900 dark:text-slate-100">最近阅读</h2>
+    <div id="recent-reads" class="space-y-3">
+      <p class="text-slate-500 text-center py-8">暂无记录</p>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const report = getReadingReport();
+  
+  // 填充统计
+  document.getElementById('stat-articles').textContent = report.totalArticles;
+  document.getElementById('stat-time').textContent = report.totalReadingTime;
+  document.getElementById('stat-streak').textContent = report.streak;
+  document.getElementById('stat-level').textContent = report.readingLevel;
+  
+  // 填充系列进度
+  const seriesContainer = document.getElementById('series-progress');
+  if (report.series.length > 0) {
+    seriesContainer.innerHTML = report.series.map(s => `
+      <div>
+        <div class="flex justify-between text-sm mb-2">
+          <span class="font-medium text-slate-700 dark:text-slate-300">${s.name}</span>
+          <span class="text-slate-500">${s.completed}/${s.total} (${s.percent}%)</span>
+        </div>
+        <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5">
+          <div class="bg-gradient-to-r from-blue-500 to-emerald-500 h-2.5 rounded-full transition-all duration-1000" style="width: ${s.percent}%"></div>
+        </div>
+        ${s.lastRead ? `<p class="text-xs text-slate-500 mt-1">最后阅读: ${new Date(s.lastRead).toLocaleDateString('zh-CN')}</p>` : ''}
+      </div>
+    `).join('');
+  } else {
+    seriesContainer.innerHTML = '<p class="text-slate-500 text-center py-4">开始阅读系列文章以追踪进度</p>';
+  }
+  
+  // 填充最近阅读（从 localStorage 解析）
+  const data = JSON.parse(localStorage.getItem('reading-analytics') || '{}');
+  const recentContainer = document.getElementById('recent-reads');
+  if (data.lastRead) {
+    recentContainer.innerHTML = `
+      <a href="${data.lastRead.id}" class="block p-4 bg-slate-50 dark:bg-slate-900 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <div class="font-medium text-slate-900 dark:text-slate-100">${data.lastRead.title}</div>
+        <div class="text-sm text-slate-500 mt-1">${new Date(data.lastRead.time).toLocaleString('zh-CN')}</div>
+      </a>
+    `;
+  }
+});
+</script>
+
+{{ end }}
