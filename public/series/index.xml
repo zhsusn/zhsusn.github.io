@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>技术系列 on zhsusn Tech Blog</title>
     <link>http://localhost:1313/series/</link>
@@ -13,7 +13,7 @@
       <link>http://localhost:1313/series/distributed-systems/</link>
       <pubDate>Wed, 15 Apr 2026 17:07:00 +0800</pubDate>
       <guid>http://localhost:1313/series/distributed-systems/</guid>
-      <description>系统化学习分布式系统</description>
+      <description></description>
     </item>
   </channel>
 </rss>

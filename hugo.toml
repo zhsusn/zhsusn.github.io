@@ -61,6 +61,18 @@ paginate = 10
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   
+  # SEO 相关配置
+  [params.seo]
+    googleSiteVerification = ""  # 谷歌站点验证
+    bingSiteVerification = ""    # 必应站点验证
+    yandexSiteVerification = ""  # 雅虎站点验证
+  
+  # 社交媒体配置
+  [params.social]
+    twitter = "zhsusn"
+    github = "zhsusn"
+    linkedin = "zhsusn"
+  
   # 搜索配置（Fuse.js）
   [params.fuseOpts]
     isCaseSensitive = false
@@ -101,3 +113,17 @@ paginate = 10
   mediaType = "application/json"
   baseName = "index"
   isPlainText = true
+
+# ------------------- 图片处理配置 -------------------
+[imaging]
+  # 生成的图片质量
+  quality = 85
+  # 生成的图片格式
+  format = "webp"
+  # 缩略图尺寸
+  [imaging.thumbnail]
+    width = 120
+    height = 120
+    cropping = "smart"
+  # 处理图片时使用的插值方法
+  resampleFilter = "Lanczos3"

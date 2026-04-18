@@ -1,68 +1,22 @@
-# theme.toml template for a Hugo theme
-# See https://github.com/gohugoio/hugoThemes#themetoml for an example
-
 name = "PaperMod"
+description = "A fast, clean, and responsive theme for Hugo."
+author = "Aditya Telange"
+author_url = "https://adityatelange.github.io"
 license = "MIT"
-licenselink = "https://github.com/adityatelange/hugo-PaperMod/blob/master/LICENSE"
-description = "A fast, clean, responsive Hugo theme"
-homepage = "https://github.com/adityatelange/hugo-PaperMod/"
-demosite = "https://adityatelange.github.io/hugo-PaperMod/"
-tags = [
-  "responsive",
-  "blog",
-  "clean",
-  "minimal",
-  "light",
-  "dark",
-  "fast",
-  "multilingual",
-  "search",
-  "seo",
-  "chroma",
-  "personal"
-]
-features = [
-  "responsive",
-  "single-column",
-  "blog",
-  "cover-image",
-  "table-of-contents",
-  "opengraph",
-  "twitter-cards",
-  "favicon",
-  "archive",
-  "share-icons",
-  "cover",
-  "multilingual",
-  "social-icons",
-  "minified-assets",
-  "theme-toggle",
-  "menu-location-indicator",
-  "scroll-to-top",
-  "search",
-  "breadcrumbs",
-  "reading-time",
-  "word-count",
-  "code-copy",
-  "comments",
-  "edit-post",
-  "canonical-link",
-  "profile-mode",
-  "home-info-mode",
-  "related-posts",
-  "rss",
-  "multiple-authors",
-  "post-nav-links"
-]
-min_version = "0.146.0"
+tags = ["responsive", "clean", "fast", "modern", "minimal"]
+features = ["responsive", "dark mode", "light mode", "search", "multilingual", "SEO"]
+min_version = "0.100.0"
 
-[author]
-  name = "Aditya Telange"
-  homepage = "https://github.com/adityatelange"
-
-# If porting an existing theme
-[original]
-  name = "Paper"
-  author = "nanxiaobei"
-  homepage = "https://github.com/nanxiaobei"
-  repo = "https://github.com/nanxiaobei/hugo-paper/"
+[params]
+  # Default theme mode
+  defaultTheme = "auto"
+  # Show reading time
+  ShowReadingTime = true
+  # Show share buttons
+  ShowShareButtons = true
+  # Show post navigation links
+  ShowPostNavLinks = true
+  # Show breadcrumbs
+  ShowBreadCrumbs = true
+  # Show code copy buttons
+  ShowCodeCopyButtons = true
