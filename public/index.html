@@ -1,385 +1,302 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" dir="auto" data-theme="auto">
+
 <head>
-	<meta name="generator" content="Hugo 0.160.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zhsusn Tech Blog | zhsusn Tech Blog</title>
-    
-    <meta name="description" content="大数据架构师的技术沉淀 | 云原生与数据工程实践">
-    
-    
-    <link rel="stylesheet" href="/css/style.min.beaf895af1f5715d77ebb22f65b55df7bfc9867100c08e51c8ed8ad34afceac1.css">
-    
+	<meta name="generator" content="Hugo 0.160.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=63829&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>zhsusn Tech Blog</title>
+<meta name="keywords" content="大数据, 架构设计, 云原生, DevOps">
+<meta name="description" content="大数据架构师的技术沉淀 | 云原生与数据工程实践">
+<meta name="author" content="zhsusn">
+<link rel="canonical" href="http://localhost:63829/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d5e245367af70fba74b9f03f823c865cbdaaa691bbca80a40fd621e5f2c99e73.css" integrity="sha256-1eJFNnr3D7p0ufA/gjyGXL2qppG7yoCkD9Yh5fLJnnM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:63829/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:63829/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:63829/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:63829/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:63829/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:63829/index.xml" title="rss">
+<link rel="alternate" type="application/json" href="http://localhost:63829/index.json" title="json">
+<link rel="alternate" type="application/json" href="http://localhost:63829/graph.json" title="graph">
+<link rel="alternate" hreflang="en" href="http://localhost:63829/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/extended/custom.css">
+
+
+<div id="reading-progress" style="width: 0%; height: 3px; background: linear-gradient(90deg, #3b82f6, #10b981); position: fixed; top: 0; left: 0; z-index: 1000; transition: width 0.1s; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);"></div>
+
+
+<div id="focus-overlay" class="fixed inset-0 bg-black/0 pointer-events-none transition-all duration-500 z-30 hidden"></div>
 </head>
-<body>
-    <header class="nav">
-    <div class="container">
+<body class="list" id="top">
+    <header class="header">
+    <nav class="header-nav">
         <div class="logo">
-            <a href="http://localhost:1313/">zhsusn Tech Blog</a>
+            <a href="http://localhost:63829/" accesskey="h" title="zhsusn Tech Blog (Alt + H)">zhsusn Tech Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
         </div>
-        <nav id="menu">
-            
-            <a href="/series/">📚 系列</a>
-            
-            <a href="/standalone/">📝 随笔</a>
-            
-            <a href="/dashboard/">📊 进度</a>
-            
-            <a href="/search/">🔍 搜索</a>
-            
-            <a href="/about/">👤 关于</a>
-            
-        </nav>
-        <button id="theme-toggle" aria-label="Toggle theme">
-            
-            ☀️
-            
-        </button>
-    </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:63829/series/" title="📚 系列">
+                    <span>📚 系列</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:63829/standalone/" title="📝 随笔">
+                    <span>📝 随笔</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:63829/dashboard/" title="📊 进度">
+                    <span>📊 进度</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:63829/search/" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:63829/about/" title="👤 关于">
+                    <span>👤 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </header>
-    <main class="main">
-        
-    <section class="profile">
-        <img src="/images/profile.png" alt="Profile" width="120" height="120">
-        <h1>zhsusn Tech Blog</h1>
-        <span>大数据架构师的技术沉淀 | 云原生与数据工程实践</span>
-        <div class="buttons">
-            <a href="/posts/" class="button">查看文章</a>
-            <a href="/about/" class="button">关于我</a>
-        </div>
-    </section>
-    <section class="posts">
-        <h2>最新文章</h2>
-        
-        <article class="post-entry">
-            <div class="entry-header">
-                <h3><a href="http://localhost:1313/about/">关于我</a></h3>
-            </div>
-            <div class="entry-content">
-                <p><p>自我介绍&hellip;</p></p>
-            </div>
-            <div class="entry-footer">
-                <span>2026-04-17</span>
-                <span>1 分钟阅读</span>
-            </div>
-        </article>
-        
-        <article class="post-entry">
-            <div class="entry-header">
-                <h3><a href="http://localhost:1313/series/distributed-systems/vol-1-foundation/ch-1-hugo-blog/">Hugo 静态博客 GitHub Pages 托管完整实施指南</a></h3>
-            </div>
-            <div class="entry-content">
-                <p><h2 id="一技术架构与核心原则">一、技术架构与核心原则##</h2>
-<h3 id="11-架构概览vendored-模式">1.1 架构概览（Vendored 模式）</h3>
-<p>本方案采用 <strong>GitHub Actions 自动化构建 + gh-pages 分支托管</strong> 的完全自动化部署架构，实现&quot;本地编写 → Git 推送 → 自动构建 → 线上生效&quot;的 DevOps 工作流。</p>
-<pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">graph LR
-    A[本地 Hugo 源码&lt;br/&gt;main 分支] --&gt;|Push 触发| B[GitHub Actions&lt;br/&gt;自动构建工作流]
-    B --&gt;|生成静态文件| C[gh-pages 分支&lt;br/&gt;纯 HTML/CSS/JS]
-    C --&gt;|Pages 服务读取| D[https://zhsusn.github.io&lt;br/&gt;CDN 加速]
-    
-    style A fill:#e1f5ff,stroke:#333
-    style B fill:#fff4e1,stroke:#333
-    style C fill:#ffcccc,stroke:#333,stroke-width:2px
-    style D fill:#90EE90,stroke:#333,stroke-width:2px
-</code></pre><h3 id="12-核心设计原则">1.2 核心设计原则</h3>
-<table>
-  <thead>
-      <tr>
-          <th style="text-align: left">原则</th>
-          <th style="text-align: left">方案选择</th>
-          <th style="text-align: left">技术考量</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>零外部依赖</strong></td>
-          <td style="text-align: left">主题直接嵌入仓库（Vendored Mode）</td>
-          <td style="text-align: left">避免 submodule 文件缺失、深度克隆失败、网络超时导致的构建不可复现</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>构建自动化</strong></td>
-          <td style="text-align: left">GitHub Actions 原生集成</td>
-          <td style="text-align: left">利用 <code>GITHUB_TOKEN</code> 自动权限，无需额外密钥配置</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>内容创作友好</strong></td>
-          <td style="text-align: left">Obsidian 本地 + Hugo 渲染钩子</td>
-          <td style="text-align: left">保留双链笔记习惯，通过渲染层自动转换 WikiLink 为标准 Markdown</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>100% 可复现</strong></td>
-          <td style="text-align: left">移除 Hugo Modules</td>
-          <td style="text-align: left">避免国内网络环境下模块拉取超时，确保任意环境构建一致性</td>
-      </tr>
-  </tbody>
-</table>
-<hr>
-<h2 id="二前置条件与基础设施准备">二、前置条件与基础设施准备</h2>
-<h3 id="21-开发环境要求">2.1 开发环境要求</h3>
-<p><strong>必需工具安装（Windows 环境）：</strong></p></p>
-            </div>
-            <div class="entry-footer">
-                <span>2026-04-15</span>
-                <span>5 分钟阅读</span>
-            </div>
-        </article>
-        
-        <article class="post-entry">
-            <div class="entry-header">
-                <h3><a href="http://localhost:1313/posts/%E4%B8%AA%E4%BA%BA%E6%8A%80%E6%9C%AF%E8%B5%84%E4%BA%A7%E5%95%86%E4%B8%9A%E5%8C%96%E6%88%98%E7%95%A5%E7%99%BD%E7%9A%AE%E4%B9%A6/">个人技术资产商业化战略白皮书</a></h3>
-            </div>
-            <div class="entry-content">
-                <p><h2 id="执行摘要executive-summary">执行摘要（Executive Summary）</h2>
-<p>本方案面向大数据与AI领域技术从业者，构建**&ldquo;技能产品化-产品平台化-平台资本化&rdquo;**的三级跃迁路径。通过17条收入流（Revenue Streams）的组合配置，实现从即时现金流（0-7天）到资本化收益（12个月+）的全周期覆盖。</p>
-<p><strong>核心商业逻辑</strong>：</p>
-<ul>
-<li>
-<p><strong>低边际成本原则</strong>：优先选择可复制、可规模化的数字产品（Digital Products）</p>
-</li>
-<li>
-<p><strong>风险分散策略</strong>：避免单一平台依赖，构建&quot;自营+平台生态+被动收入&quot;的三元收入结构</p>
-</li>
-<li>
-<p><strong>技能杠杆效应</strong>：以数据工程专业能力为底层资产，通过AI工具放大交付效率</p>
-</li>
-</ul>
-<p><strong>预期收益模型</strong>：</p>
-<ul>
-<li>
-<p><strong>生存期</strong>（0-6月）：月均收入¥15,000（咨询+资料+课程）</p>
-</li>
-<li>
-<p><strong>增长期</strong>（6-18月）：月均收入¥30,000（SaaS订阅+企业培训）</p>
-</li>
-<li>
-<p><strong>规模期</strong>（18月+）：年均收入¥500,000+（企业版授权+资本化收益）</p>
-</li>
-</ul>
-<hr>
-<h2 id="第一部分战略架构与变现矩阵">第一部分：战略架构与变现矩阵</h2>
-<h3 id="11-收入流分类矩阵revenue-stream-matrix">1.1 收入流分类矩阵（Revenue Stream Matrix）</h3>
-<p>按<strong>时间投入强度</strong>与<strong>资产沉淀程度</strong>两个维度，将17条变现路径分类：</p>
-<p>表格</p>
-<table>
-  <thead>
-      <tr>
-          <th style="text-align: center">象限</th>
-          <th style="text-align: left">特征</th>
-          <th style="text-align: left">收入流</th>
-          <th style="text-align: center">现金流速度</th>
-          <th style="text-align: center">资产沉淀</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: center"><strong>Q1</strong><!-- raw HTML omitted --></td>
-          <td style="text-align: left">高时间投入<!-- raw HTML omitted --></td>
-          <td style="text-align: left">技术轻咨询、虚拟资料、AI工作流定制、闲鱼技能服务</td>
-          <td style="text-align: center">T+0~7天</td>
-          <td style="text-align: center">⭐</td>
-      </tr>
-      <tr>
-          <td style="text-align: center"><strong>Q2</strong><!-- raw HTML omitted --></td>
-          <td style="text-align: left">高时间投入<!-- raw HTML omitted --></td>
-          <td style="text-align: left">体系化课程、开源项目商业化、浏览器插件、代码市场</td>
-          <td style="text-align: center">T+30~90天</td>
-          <td style="text-align: center">⭐⭐⭐</td>
-      </tr>
-      <tr>
-          <td style="text-align: center"><strong>Q3</strong><!-- raw HTML omitted --></td>
-          <td style="text-align: left">中等时间投入<!-- raw HTML omitted --></td>
-          <td style="text-align: left">企业内训、技术外包、付费社群</td>
-          <td style="text-align: center">T+7~30天</td>
-          <td style="text-align: center">⭐⭐</td>
-      </tr>
-      <tr>
-          <td style="text-align: center"><strong>Q4</strong><!-- raw HTML omitted --></td>
-          <td style="text-align: left">低时间投入<!-- raw HTML omitted --></td>
-          <td style="text-align: left">SaaS订阅、API服务、开源托管、技术IP资本化</td>
-          <td style="text-align: center">T+90~180天</td>
-          <td style="text-align: center">⭐⭐⭐⭐⭐</td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>战略配置建议</strong>：</p></p>
-            </div>
-            <div class="entry-footer">
-                <span>2026-04-15</span>
-                <span>4 分钟阅读</span>
-            </div>
-        </article>
-        
-        <article class="post-entry">
-            <div class="entry-header">
-                <h3><a href="http://localhost:1313/posts/%E4%B8%AA%E4%BA%BA%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E4%B8%8E%E5%93%81%E7%89%8C%E5%BB%BA%E8%AE%BE%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88/">个人数字资产管理与品牌建设工程化方案</a></h3>
-            </div>
-            <div class="entry-content">
-                <p><h2 id="一执行摘要executive-summary">一、执行摘要（Executive Summary）</h2>
-<p>本方案构建以<strong>独立博客为核心主权资产</strong>的内容生态系统，通过&quot;中心化存储、分布式触达、差异化呈现&quot;的三层架构，实现技术影响力资产的长期积累与复合增值。</p>
-<p><strong>核心机制</strong>：</p>
-<ul>
-<li>
-<p><strong>内容主权</strong>：GitHub Pages + Hugo 构建完全可控的数字不动产</p>
-</li>
-<li>
-<p><strong>SEO护城河</strong>：48小时原创保护期 + 规范化的跨平台分发策略</p>
-</li>
-<li>
-<p><strong>流量漏斗</strong>：公域平台（知乎/掘金）→ 私域载体（Newsletter）→ 付费社群（知识星球）</p>
-</li>
-<li>
-<p><strong>零损耗工作流</strong>：Obsidian 本地创作与 Git 版本控制的无缝集成</p>
-</li>
-</ul>
-<hr>
-<h2 id="二战略架构三层防御体系与平台矩阵">二、战略架构：三层防御体系与平台矩阵</h2>
-<h3 id="21-架构设计原则">2.1 架构设计原则</h3>
-<p>
+<main class="main"> 
 
+<article class="first-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">个人技术资产商业化战略白皮书
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>执行摘要（Executive Summary） 本方案面向大数据与AI领域技术从业者，构建**“技能产品化-产品平台化-平台资本化”**的三级跃迁路径。通过17条收入流（Revenue Streams）的组合配置，实现从即时现金流（0-7天）到资本化收益（12个月&#43;）的全周期覆盖。
+核心商业逻辑：
+低边际成本原则：优先选择可复制、可规模化的数字产品（Digital Products）
+风险分散策略：避免单一平台依赖，构建&#34;自营&#43;平台生态&#43;被动收入&#34;的三元收入结构
+技能杠杆效应：以数据工程专业能力为底层资产，通过AI工具放大交付效率
+预期收益模型：
+生存期（0-6月）：月均收入¥15,000（咨询&#43;资料&#43;课程）
+增长期（6-18月）：月均收入¥30,000（SaaS订阅&#43;企业培训）
+规模期（18月&#43;）：年均收入¥500,000&#43;（企业版授权&#43;资本化收益）
+第一部分：战略架构与变现矩阵 1.1 收入流分类矩阵（Revenue Stream Matrix） 按时间投入强度与资产沉淀程度两个维度，将17条变现路径分类：
+表格
+象限 特征 收入流 现金流速度 资产沉淀 Q1 高时间投入 技术轻咨询、虚拟资料、AI工作流定制、闲鱼技能服务 T&#43;0~7天 ⭐ Q2 高时间投入 体系化课程、开源项目商业化、浏览器插件、代码市场 T&#43;30~90天 ⭐⭐⭐ Q3 中等时间投入 企业内训、技术外包、付费社群 T&#43;7~30天 ⭐⭐ Q4 低时间投入 SaaS订阅、API服务、开源托管、技术IP资本化 T&#43;90~180天 ⭐⭐⭐⭐⭐ 战略配置建议：
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-04-15 15:29:32 +0800 CST'>April 15, 2026</span>&nbsp;·&nbsp;<span>4 min</span>&nbsp;·&nbsp;<span>zhsusn</span></footer>
+  <a class="entry-link" aria-label="post link to 个人技术资产商业化战略白皮书" href="http://localhost:63829/posts/%E4%B8%AA%E4%BA%BA%E6%8A%80%E6%9C%AF%E8%B5%84%E4%BA%A7%E5%95%86%E4%B8%9A%E5%8C%96%E6%88%98%E7%95%A5%E7%99%BD%E7%9A%AE%E4%B9%A6/"></a>
+</article>
 
-
-
-
-
-<img src="/images/architecture.png" 
-     alt="架构图" 
-     
-     loading="lazy" 
-     style="max-width: 100%; height: auto;"></p>
-<p><strong>关键约束</strong>：</p>
-<ol>
-<li>
-<p><strong>单向流动原则</strong>：禁止平台内容反向同步至博客，避免搜索引擎的重复内容惩罚（Duplicate Content Penalty）</p>
-</li>
-<li>
-<p><strong>首发独占期</strong>：博客发布后48小时内禁止跨平台分发，确保搜索引擎优先索引原创源并建立权威度（Authority）</p>
-</li>
-<li>
-<p><strong>差异化变体</strong>：各平台内容必须为&quot;语义变体&quot;（Semantic Variation），禁止全文复制导致的站内竞争（Cannibalization）</p>
-</li>
-</ol>
-<h3 id="22-平台定位与边界矩阵">2.2 平台定位与边界矩阵</h3>
-<table>
-  <thead>
-      <tr>
-          <th style="text-align: center">层级</th>
-          <th style="text-align: left">平台</th>
-          <th style="text-align: left">核心定位</th>
-          <th style="text-align: left">内容边界</th>
-          <th style="text-align: center">更新频率</th>
-          <th style="text-align: left">与主站关系</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: center"><strong>主权层</strong></td>
-          <td style="text-align: left"><strong>独立博客</strong></td>
-          <td style="text-align: left">数字不动产/SEO核心资产</td>
-          <td style="text-align: left">完整闭环长文（3000+字）<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><strong>月更2-4篇</strong></td>
-          <td style="text-align: left">唯一源头<!-- raw HTML omitted --></td>
-      </tr>
-      <tr>
-          <td style="text-align: center"><strong>流量层</strong></td>
-          <td style="text-align: left"><strong>知乎</strong></td>
-          <td style="text-align: left">中文搜索流量入口<!-- raw HTML omitted --></td>
-          <td style="text-align: left">节选改编（1500字）<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><strong>周更1-2篇</strong></td>
-          <td style="text-align: left">≤博客发布频率<!-- raw HTML omitted --></td>
-      </tr>
-      <tr>
-          <td style="text-align: center"><strong>流量层</strong></td>
-          <td style="text-align: left"><strong>掘金</strong></td>
-          <td style="text-align: left">开发者社区渗透<!-- raw HTML omitted --></td>
-          <td style="text-align: left">实战教程（2000字）<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><strong>按需发布</strong></td>
-          <td style="text-align: left">仅技术类文章配套发布<!-- raw HTML omitted --></td>
-      </tr>
-      <tr>
-          <td style="text-align: center"><strong>资产层</strong></td>
-          <td style="text-align: left"><strong>GitHub</strong></td>
-          <td style="text-align: left">技术实力背书<!-- raw HTML omitted --></td>
-          <td style="text-align: left">完整代码仓库<!-- raw HTML omitted --></td>
-          <td style="text-align: center">随博客更新</td>
-          <td style="text-align: left">博客文章引用GitHub资源<!-- raw HTML omitted --></td>
-      </tr>
-      <tr>
-          <td style="text-align: center"><strong>触达层</strong></td>
-          <td style="text-align: left"><strong>Newsletter</strong></td>
-          <td style="text-align: left">算法免疫的直接触达<!-- raw HTML omitted --></td>
-          <td style="text-align: left">月度精选合集<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><strong>月更1期</strong></td>
-          <td style="text-align: left">自动汇总本月博客精华<!-- raw HTML omitted --></td>
-      </tr>
-      <tr>
-          <td style="text-align: center"><strong>变现层</strong></td>
-          <td style="text-align: left"><strong>知识星球</strong></td>
-          <td style="text-align: left">私密深度交流<!-- raw HTML omitted --></td>
-          <td style="text-align: left">幕后解读/内部PPT<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><strong>周更3-5条</strong></td>
-          <td style="text-align: left">筛选博客高互动话题<!-- raw HTML omitted --></td>
-      </tr>
-  </tbody>
-</table>
-<hr>
-<h2 id="三内容运营方法论全生命周期管理">三、内容运营方法论：全生命周期管理</h2>
-<h3 id="31-内容生产流程content-pipeline">3.1 内容生产流程（Content Pipeline）</h3>
-<p><strong>阶段一：生产层构思（Day 1-7）</strong></p></p>
-            </div>
-            <div class="entry-footer">
-                <span>2026-04-15</span>
-                <span>4 分钟阅读</span>
-            </div>
-        </article>
-        
-        <article class="post-entry">
-            <div class="entry-header">
-                <h3><a href="http://localhost:1313/search/">搜索</a></h3>
-            </div>
-            <div class="entry-content">
-                <p>全站内容搜索</p>
-            </div>
-            <div class="entry-footer">
-                <span>0001-01-01</span>
-                <span>0 分钟阅读</span>
-            </div>
-        </article>
-        
-    </section>
-
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">个人数字资产管理与品牌建设工程化方案
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>一、执行摘要（Executive Summary） 本方案构建以独立博客为核心主权资产的内容生态系统，通过&#34;中心化存储、分布式触达、差异化呈现&#34;的三层架构，实现技术影响力资产的长期积累与复合增值。
+核心机制：
+内容主权：GitHub Pages &#43; Hugo 构建完全可控的数字不动产
+SEO护城河：48小时原创保护期 &#43; 规范化的跨平台分发策略
+流量漏斗：公域平台（知乎/掘金）→ 私域载体（Newsletter）→ 付费社群（知识星球）
+零损耗工作流：Obsidian 本地创作与 Git 版本控制的无缝集成
+二、战略架构：三层防御体系与平台矩阵 2.1 架构设计原则 关键约束：
+单向流动原则：禁止平台内容反向同步至博客，避免搜索引擎的重复内容惩罚（Duplicate Content Penalty）
+首发独占期：博客发布后48小时内禁止跨平台分发，确保搜索引擎优先索引原创源并建立权威度（Authority）
+差异化变体：各平台内容必须为&#34;语义变体&#34;（Semantic Variation），禁止全文复制导致的站内竞争（Cannibalization）
+2.2 平台定位与边界矩阵 层级 平台 核心定位 内容边界 更新频率 与主站关系 主权层 独立博客 数字不动产/SEO核心资产 完整闭环长文（3000&#43;字） 月更2-4篇 唯一源头 流量层 知乎 中文搜索流量入口 节选改编（1500字） 周更1-2篇 ≤博客发布频率 流量层 掘金 开发者社区渗透 实战教程（2000字） 按需发布 仅技术类文章配套发布 资产层 GitHub 技术实力背书 完整代码仓库 随博客更新 博客文章引用GitHub资源 触达层 Newsletter 算法免疫的直接触达 月度精选合集 月更1期 自动汇总本月博客精华 变现层 知识星球 私密深度交流 幕后解读/内部PPT 周更3-5条 筛选博客高互动话题 三、内容运营方法论：全生命周期管理 3.1 内容生产流程（Content Pipeline） 阶段一：生产层构思（Day 1-7）
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-04-15 15:11:05 +0800 CST'>April 15, 2026</span>&nbsp;·&nbsp;<span>4 min</span>&nbsp;·&nbsp;<span>zhsusn</span></footer>
+  <a class="entry-link" aria-label="post link to 个人数字资产管理与品牌建设工程化方案" href="http://localhost:63829/posts/%E4%B8%AA%E4%BA%BA%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E4%B8%8E%E5%93%81%E7%89%8C%E5%BB%BA%E8%AE%BE%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88/"></a>
+</article>
     </main>
-    <footer class="footer">
-    <div class="container">
-        <div class="social-icons">
-            
-            <a href="https://twitter.com/zhsusn" target="_blank" aria-label="Twitter">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                </svg>
-            </a>
-            
-            
-            <a href="https://github.com/zhsusn" target="_blank" aria-label="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                </svg>
-            </a>
-            
-            
-            <a href="https://linkedin.com/in/zhsusn" target="_blank" aria-label="LinkedIn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                    <rect x="2" y="9" width="4" height="12"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-            </a>
-            
-        </div>
-        <p>&copy; 2026 zhsusn Tech Blog. All rights reserved.</p>
-    </div>
-</footer>
     
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:63829/">zhsusn Tech Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const rssLink = document.querySelector('a[href*="index.xml"]');
+    if (rssLink) {
+        rssLink.setAttribute('target', '_blank');
+        rssLink.setAttribute('rel', 'noopener noreferrer');
+        rssLink.title = "RSS 订阅源（可用 RSS 阅读器订阅）";
+        
+        
+        rssLink.addEventListener('click', function(e) {
+            
+            if (!e.ctrlKey && !e.metaKey) {
+                const confirm = window.confirm(
+                    '📡 这是 RSS 订阅链接\n\n' +
+                    '你可以：\n' +
+                    '1. 复制当前地址到 RSS 阅读器（如 Feedly）\n' +
+                    '2. 直接打开查看 XML 源码\n\n' +
+                    '是否继续打开？'
+                );
+                if (!confirm) {
+                    e.preventDefault();
+                    
+                    navigator.clipboard.writeText(this.href).then(() => {
+                        alert('✅ RSS 链接已复制到剪贴板，请粘贴到你的 RSS 阅读器');
+                    });
+                }
+            }
+        });
+    }
+});
+</script>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
 </body>
+
 </html>
