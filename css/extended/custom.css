@@ -549,3 +549,41 @@ body {
     scrollbar-width: thin;
     scrollbar-color: var(--border-color) var(--bg-secondary);
 }
+
+/* ------------------- SVG 图标大小控制 ------------------- */
+/* 控制所有SVG图标的最大尺寸，防止显示过大 */
+svg {
+    max-width: 100% !important;
+    max-height: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+    vertical-align: middle !important;
+}
+
+/* 特定区域的SVG图标大小调整 */
+.post-content svg,
+.post-meta svg,
+.entry-footer svg,
+.breadcrumbs svg,
+.flex.items-center svg {
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+}
+
+/* 导航栏和社交图标 */
+.social-icons svg {
+    width: 20px !important;
+    height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+}
+
+/* 主题切换按钮图标 */
+#theme-toggle svg {
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
+}
