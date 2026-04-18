@@ -1,0 +1,51 @@
+{{- $nodes := slice -}}
+{{- $links := slice -}}
+{{- $nodeMap := dict -}}
+
+{{- range .Site.AllPages -}}
+  {{- if and (ne .Kind "section") (ne .Kind "taxonomy") (ne .Kind "term") (not .Draft) -}}
+    {{- if or .Params.series (eq .Type "standalone") -}}
+      {{- $id := .File.BaseFileName | default (path.Base .RelPermalink) -}}
+      {{- $series := .Params.series | default "standalone" -}}
+      {{- $seriesPage := $.Site.GetPage (printf "/series/%s" $series) -}}
+      {{- $color := .Params.graph.color | default ($seriesPage.Params.graph.color) | default "#64748b" -}}
+      {{- $group := 0 -}}
+      {{- if eq $series "distributed-systems" }}{{ $group = 1 }}{{ end -}}
+      {{- if eq $series "data-engineering" }}{{ $group = 2 }}{{ end -}}
+      {{- if eq $series "tooling" }}{{ $group = 3 }}{{ end -}}
+      
+      {{- $node := dict 
+        "id" $id
+        "title" .Title
+        "series" $series
+        "seriesTitle" ($seriesPage.Title | default $series)
+        "chapter" (.Params.chapter | default 0)
+        "permalink" .Permalink
+        "color" $color
+        "group" $group
+        "radius" (.Params.graph.size | default 6)
+        "tags" (.Params.graph.tags | default slice)
+        "excerpt" (.Summary | plainify | truncate 100)
+      -}}
+      
+      {{- $nodes = $nodes | append $node -}}
+      {{- $nodeMap = merge $nodeMap (dict $id $node) -}}
+      
+      {{- range .Params.links -}}
+        {{- $targetSlug := .slug -}}
+        {{- $targetSeries := .series | default $series -}}
+        {{- $targetId := $targetSlug -}}
+        {{- $link := dict 
+          "source" $id
+          "target" $targetId
+          "type" .type
+          "strength" (cond (eq .type "prerequisite") 2 1)
+        -}}
+        {{- $links = $links | append $link -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $graphData := dict "nodes" $nodes "links" $links "generated" (now.Format "2006-01-02T15:04:05") -}}
+{{- $graphData | jsonify -}}

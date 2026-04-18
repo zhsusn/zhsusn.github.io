@@ -2,31 +2,29 @@
 title: "Hugo 静态博客 GitHub Pages 托管完整实施指南"
 date: 2026-04-15T17:07:00+08:00
 draft: false
+series: "distributed-systems"
+volume: "vol-1-foundation"
+chapter: 1
 
-# 书籍化架构（核心）
-series: "distributed-systems"        # 系列名称（英文，用于 URL）
-volume: "vol-1-foundation"           # 卷标识
-chapter: 1                            # 章节序号
+# 双链系统（知识图谱核心）
+links:                          #  outgoing links：本文引用了哪些
+  - title: "CAP 定理详解"
+    slug: "cap-theorem"
+    series: "distributed-systems"
+    type: "prerequisite"        # 类型：prerequisite（前置）/ related（相关）/ next（后续）
+  
+  - title: "Obsidian 工作流"
+    slug: "obsidian-workflow"
+    series: "tooling"
+    type: "related"
 
-# 可选：系列显示名称（如与文件名不同）
-seriesTitle: "分布式系统架构"
-volumeTitle: "基础理论"
+backlinks: []                   #  incoming links：被谁引用（自动生成，无需手动填写）
 
-# 基础元数据
-tags: ["数字资产", "博客", "Hugo", "GitHub Pages"]
-categories: ["数字资产"]
-description: "从零搭建基于 Hugo + GitHub Pages 的技术博客完整指南，包含自动化部署与主题定制"
-
-# 学习辅助
-difficulty: "beginner"                # 难度：beginner/intermediate/advanced
-estimatedReadTime: 15
-prerequisites: []                      # 前置章节（可选）
-nextChapters: ["ch-2-advanced-hugo"] # 后续推荐（可选）
-
-# 封面图（可选）
-cover:
-  image: "/images/hugo-guide-cover.png"
-  alt: "Hugo 博客架构图"
+# 图谱可视化元数据
+graph:
+  color: "#3b82f6"              # 节点颜色（可选，按系列默认）
+  size: 8                       # 节点大小
+  tags: ["基础设施", "DevOps"]  # 图谱标签
 ---
 
 

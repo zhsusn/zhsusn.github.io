@@ -80,10 +80,15 @@ paginate = 10
     "js/extended/theme.js"            # Phase 2: 主题管理
   ]
 
-# ------------------- 输出配置 -------------------
+# ------------------- 输出配置 -------------------  
 [outputs]
-  home = ["HTML", "RSS", "JSON"]  # JSON 用于搜索索引
+  home = ["HTML", "RSS", "JSON", "GRAPH"]  # 添加 GRAPH
 
+[outputFormats.GRAPH]
+  mediaType = "application/json"
+  baseName = "graph"
+  isPlainText = true
+  
 [outputFormats.JSON]
   mediaType = "application/json"
   baseName = "index"

@@ -6,8 +6,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
 <title>Hugo 静态博客 GitHub Pages 托管完整实施指南 | zhsusn Tech Blog</title>
-<meta name="keywords" content="数字资产, 博客, Hugo, GitHub Pages">
-<meta name="description" content="从零搭建基于 Hugo &#43; GitHub Pages 的技术博客完整指南，包含自动化部署与主题定制">
+<meta name="keywords" content="">
+<meta name="description" content="一、技术架构与核心原则##
+1.1 架构概览（Vendored 模式）
+本方案采用 GitHub Actions 自动化构建 &#43; gh-pages 分支托管 的完全自动化部署架构，实现&quot;本地编写 → Git 推送 → 自动构建 → 线上生效&quot;的 DevOps 工作流。
+graph LR
+    A[本地 Hugo 源码&lt;br/&gt;main 分支] --&gt;|Push 触发| B[GitHub Actions&lt;br/&gt;自动构建工作流]
+    B --&gt;|生成静态文件| C[gh-pages 分支&lt;br/&gt;纯 HTML/CSS/JS]
+    C --&gt;|Pages 服务读取| D[https://zhsusn.github.io&lt;br/&gt;CDN 加速]
+    
+    style A fill:#e1f5ff,stroke:#333
+    style B fill:#fff4e1,stroke:#333
+    style C fill:#ffcccc,stroke:#333,stroke-width:2px
+    style D fill:#90EE90,stroke:#333,stroke-width:2px
+1.2 核心设计原则
+
+  
+      
+          原则
+          方案选择
+          技术考量
+      
+  
+  
+      
+          零外部依赖
+          主题直接嵌入仓库（Vendored Mode）
+          避免 submodule 文件缺失、深度克隆失败、网络超时导致的构建不可复现
+      
+      
+          构建自动化
+          GitHub Actions 原生集成
+          利用 GITHUB_TOKEN 自动权限，无需额外密钥配置
+      
+      
+          内容创作友好
+          Obsidian 本地 &#43; Hugo 渲染钩子
+          保留双链笔记习惯，通过渲染层自动转换 WikiLink 为标准 Markdown
+      
+      
+          100% 可复现
+          移除 Hugo Modules
+          避免国内网络环境下模块拉取超时，确保任意环境构建一致性
+      
+  
+
+
+二、前置条件与基础设施准备
+2.1 开发环境要求
+必需工具安装（Windows 环境）：">
 <meta name="author" content="zhsusn">
 <link rel="canonical" href="http://localhost:1313/series/distributed-systems/vol-1-foundation/ch-1-hugo-blog/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.db735074ab9fee5884ba717b38b2efbfc2a95089050aeeb5412eba8c42ad6644.css" integrity="sha256-23NQdKuf7liEunF7OLLvv8KpUIkFCu61QS66jEKtZkQ=" rel="preload stylesheet" as="style">
@@ -187,17 +234,13 @@
     
     <div class="flex items-center justify-center gap-3 mb-4 flex-wrap">
       <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium font-sans">
-        📚 分布式系统架构
+        📚 distributed-systems
       </span>
       
       <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm font-mono">
         第 1 章
       </span>
       
-      
-      <span class="px-3 py-1 bg-green-50 dark:bg-green-900/30 text-green-600 rounded-full text-xs font-medium">
-        入门
-      </span>
       
     </div>
     
@@ -673,26 +716,6 @@
   <footer class="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 max-w-3xl mx-auto">
     
     
-    <div class="flex flex-wrap gap-2 mb-8 justify-center">
-      
-      <a href="/tags/%E6%95%B0%E5%AD%97%E8%B5%84%E4%BA%A7" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm font-sans hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-        #数字资产
-      </a>
-      
-      <a href="/tags/%E5%8D%9A%E5%AE%A2" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm font-sans hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-        #博客
-      </a>
-      
-      <a href="/tags/hugo" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm font-sans hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-        #Hugo
-      </a>
-      
-      <a href="/tags/github-pages" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm font-sans hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-        #GitHub Pages
-      </a>
-      
-    </div>
-    
 
     
     <div class="flex items-center justify-between mb-8">
@@ -745,6 +768,461 @@
       </div>
     </div>
   </footer>
+
+<div id="graph-widget" class="hidden xl:block fixed right-6 top-24 w-72 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg overflow-hidden z-40 transition-all hover:shadow-xl">
+  <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
+    <div>
+      <h4 class="text-sm font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        知识关联
+      </h4>
+      <p class="text-xs text-slate-500 mt-0.5">点击节点跳转，拖拽探索</p>
+    </div>
+    <button onclick="toggleGraphModal()" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors" title="全屏查看">
+      <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+    </button>
+  </div>
+  
+  <div id="graph-canvas-mini" class="h-64 w-full cursor-move bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800"></div>
+  
+  <div class="px-4 py-3 bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 flex justify-between items-center">
+    <span id="graph-stats">加载中...</span>
+    <button onclick="resetGraphZoom()" class="text-blue-600 hover:text-blue-700 font-medium">重置视图</button>
+  </div>
+</div>
+
+
+<div id="graph-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4 sm:p-8">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-6xl h-[90vh] flex flex-col border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden">
+    <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center flex-shrink-0">
+      <div>
+        <h3 class="text-2xl font-bold text-slate-900 dark:text-slate-100">知识图谱</h3>
+        <p class="text-sm text-slate-500 mt-1">可视化展示知识点间的关联与依赖</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 text-xs text-slate-500 mr-4">
+          <span class="w-3 h-3 rounded-full bg-blue-500"></span> 分布式
+          <span class="w-3 h-3 rounded-full bg-purple-500 ml-2"></span> 数据工程
+          <span class="w-3 h-3 rounded-full bg-emerald-500 ml-2"></span> 工具
+        </div>
+        <button onclick="toggleGraphModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+          <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+    </div>
+    
+    <div class="flex-1 relative overflow-hidden">
+      <div id="graph-canvas-full" class="w-full h-full cursor-move"></div>
+      
+      
+      <div class="absolute top-4 left-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur rounded-lg border border-slate-200 dark:border-slate-700 p-3 shadow-lg">
+        <div class="space-y-2">
+          <button onclick="zoomGraph(1.2)" class="block p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="放大">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+          </button>
+          <button onclick="zoomGraph(0.8)" class="block p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="缩小">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path></svg>
+          </button>
+          <button onclick="resetGraphZoom()" class="block p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="重置">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          </button>
+        </div>
+      </div>
+      
+      
+      <div id="node-details" class="absolute bottom-4 right-4 w-80 bg-white/95 dark:bg-slate-800/95 backdrop-blur rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-lg transform translate-y-full opacity-0 transition-all duration-300 pointer-events-none">
+        <h4 id="node-title" class="font-bold text-slate-900 dark:text-slate-100 mb-1"></h4>
+        <p id="node-series" class="text-xs text-blue-600 dark:text-blue-400 mb-2"></p>
+        <p id="node-excerpt" class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-3"></p>
+        <a id="node-link" href="#" class="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 font-medium">
+          查看文章
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+
+let graphData = { nodes: [], links: [] };
+let miniSimulation, fullSimulation;
+let miniSvg, fullSvg;
+let currentZoom = d3.zoomIdentity;
+
+
+fetch('/graph.json')
+  .then(r => r.json())
+  .then(data => {
+    graphData = data;
+    document.getElementById('graph-stats').textContent = 
+      `${data.nodes.length} 节点 · ${data.links.length} 连接`;
+    
+    
+    const currentId = 'ch-1-hugo-blog';
+    if (currentId) {
+      const node = data.nodes.find(n => n.id === currentId);
+      if (node) {
+        node.radius = 12;  
+        node.current = true;
+      }
+    }
+    
+    initMiniGraph();
+  })
+  .catch(err => {
+    console.error('图谱数据加载失败:', err);
+    document.getElementById('graph-stats').textContent = '数据加载失败';
+  });
+
+
+function initMiniGraph() {
+  const container = document.getElementById('graph-canvas-mini');
+  if (!container || graphData.nodes.length === 0) return;
+  
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  
+  
+  const currentId = 'ch-1-hugo-blog';
+  const linkedIds = new Set([currentId]);
+  
+  graphData.links.forEach(l => {
+    if (l.source === currentId) linkedIds.add(l.target);
+    if (l.target === currentId) linkedIds.add(l.source);
+  });
+  
+  
+  let visibleNodes = graphData.nodes.filter(n => 
+    linkedIds.has(n.id) || 
+    (n.series === 'distributed-systems' && n.id !== currentId)
+  ).slice(0, 15);  
+  
+  if (visibleNodes.length < 5) {
+    visibleNodes = graphData.nodes.slice(0, 10);  
+  }
+  
+  const visibleIds = new Set(visibleNodes.map(n => n.id));
+  const visibleLinks = graphData.links.filter(l => 
+    visibleIds.has(l.source) && visibleIds.has(l.target)
+  );
+  
+  
+  miniSvg = d3.select('#graph-canvas-mini')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .attr('viewBox', [0, 0, width, height]);
+  
+  
+  miniSimulation = d3.forceSimulation(visibleNodes)
+    .force('link', d3.forceLink(visibleLinks).id(d => d.id).distance(50))
+    .force('charge', d3.forceManyBody().strength(-200))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(d => d.radius + 2));
+  
+  
+  const link = miniSvg.append('g')
+    .selectAll('line')
+    .data(visibleLinks)
+    .join('line')
+    .attr('stroke', 'currentColor')
+    .attr('stroke-opacity', 0.2)
+    .attr('class', 'text-slate-400 dark:text-slate-600')
+    .attr('stroke-width', d => d.strength || 1);
+  
+  
+  const node = miniSvg.append('g')
+    .selectAll('g')
+    .data(visibleNodes)
+    .join('g')
+    .attr('class', 'cursor-pointer hover:opacity-80 transition-opacity')
+    .call(d3.drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end', dragended))
+    .on('click', (e, d) => {
+      if (d.permalink) window.location.href = d.permalink;
+    })
+    .on('mouseenter', (e, d) => {
+      d3.select(e.currentTarget).select('circle')
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 3);
+    })
+    .on('mouseleave', (e, d) => {
+      d3.select(e.currentTarget).select('circle')
+        .attr('stroke', d.current ? '#fbbf24' : 'none')
+        .attr('stroke-width', d.current ? 3 : 0);
+    });
+  
+  
+  node.append('circle')
+    .attr('r', d => d.radius || 6)
+    .attr('fill', d => d.color)
+    .attr('stroke', d => d.current ? '#fbbf24' : 'none')
+    .attr('stroke-width', d => d.current ? 3 : 0);
+  
+  
+  node.filter(d => d.current || linkedIds.has(d.id))
+    .append('text')
+    .attr('x', d => d.radius + 4)
+    .attr('y', 4)
+    .text(d => d.title.length > 6 ? d.title.slice(0, 6) + '...' : d.title)
+    .attr('font-size', '10px')
+    .attr('fill', 'currentColor')
+    .attr('class', 'text-slate-600 dark:text-slate-400 font-sans');
+  
+  
+  miniSimulation.on('tick', () => {
+    link
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y);
+    
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+}
+
+
+let fullZoom;
+
+function initFullGraph() {
+  const container = document.getElementById('graph-canvas-full');
+  if (!container || graphData.nodes.length === 0) return;
+  
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  
+  d3.select('#graph-canvas-full').selectAll('*').remove();
+  
+  fullSvg = d3.select('#graph-canvas-full')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .attr('viewBox', [0, 0, width, height]);
+  
+  
+  const g = fullSvg.append('g');
+  
+  fullZoom = d3.zoom()
+    .scaleExtent([0.1, 4])
+    .on('zoom', (e) => {
+      g.attr('transform', e.transform);
+      currentZoom = e.transform;
+    });
+  
+  fullSvg.call(fullZoom);
+  
+  
+  fullSimulation = d3.forceSimulation(graphData.nodes)
+    .force('link', d3.forceLink(graphData.links).id(d => d.id).distance(100))
+    .force('charge', d3.forceManyBody().strength(-300))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(d => d.radius * 2 + 5));
+  
+  
+  const link = g.append('g')
+    .selectAll('line')
+    .data(graphData.links)
+    .join('line')
+    .attr('stroke', 'currentColor')
+    .attr('stroke-opacity', 0.3)
+    .attr('class', 'text-slate-400 dark:text-slate-600')
+    .attr('stroke-width', d => d.strength || 1)
+    .attr('stroke-dasharray', d => d.type === 'prerequisite' ? '5,5' : 'none');
+  
+  
+  const node = g.append('g')
+    .selectAll('g')
+    .data(graphData.nodes)
+    .join('g')
+    .attr('class', 'cursor-pointer')
+    .call(d3.drag()
+      .on('start', (e, d) => {
+        if (!e.active) fullSimulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      })
+      .on('drag', (e, d) => {
+        d.fx = e.x;
+        d.fy = e.y;
+      })
+      .on('end', (e, d) => {
+        if (!e.active) fullSimulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      }))
+    .on('click', (e, d) => {
+      showNodeDetails(d);
+      e.stopPropagation();
+    });
+  
+  
+  node.append('circle')
+    .attr('r', d => d.radius || 8)
+    .attr('fill', d => d.color)
+    .attr('stroke', d => d.current ? '#fbbf24' : '#fff')
+    .attr('stroke-width', d => d.current ? 4 : 2)
+    .attr('class', 'dark:stroke-slate-800');
+  
+  
+  node.append('text')
+    .attr('x', d => d.radius + 8)
+    .attr('y', 5)
+    .text(d => d.title)
+    .attr('font-size', '12px')
+    .attr('font-weight', '600')
+    .attr('fill', 'currentColor')
+    .attr('class', 'text-slate-700 dark:text-slate-300 font-sans')
+    .style('pointer-events', 'none')
+    .style('text-shadow', '0 1px 2px rgba(255,255,255,0.8), 0 -1px 2px rgba(255,255,255,0.8)');
+  
+  
+  node.append('text')
+    .attr('x', d => d.radius + 8)
+    .attr('y', 20)
+    .text(d => d.seriesTitle)
+    .attr('font-size', '10px')
+    .attr('fill', 'currentColor')
+    .attr('class', 'text-slate-500 dark:text-slate-500 font-sans')
+    .style('pointer-events', 'none');
+  
+  
+  fullSimulation.on('tick', () => {
+    link
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y);
+    
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+  
+  
+  fullSvg.on('click', () => {
+    hideNodeDetails();
+  });
+}
+
+
+function showNodeDetails(node) {
+  const panel = document.getElementById('node-details');
+  document.getElementById('node-title').textContent = node.title;
+  document.getElementById('node-series').textContent = node.seriesTitle;
+  document.getElementById('node-excerpt').textContent = node.excerpt || '暂无摘要';
+  document.getElementById('node-link').href = node.permalink;
+  
+  panel.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+  panel.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+}
+
+function hideNodeDetails() {
+  const panel = document.getElementById('node-details');
+  panel.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+  panel.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+}
+
+
+function toggleGraphModal() {
+  const modal = document.getElementById('graph-modal');
+  if (modal.classList.contains('hidden')) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    setTimeout(initFullGraph, 100);
+  } else {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+}
+
+
+function zoomGraph(scale) {
+  if (fullSvg && fullZoom) {
+    fullSvg.transition()
+      .duration(750)
+      .call(fullZoom.scaleBy, scale);
+  }
+}
+
+function resetGraphZoom() {
+  if (fullSvg && fullZoom) {
+    fullSvg.transition()
+      .duration(750)
+      .call(fullZoom.transform, d3.zoomIdentity);
+  }
+  
+  if (fullSimulation) {
+    fullSimulation.alpha(1).restart();
+  }
+}
+
+
+function dragstarted(e, d) {
+  if (!e.active) this.simulation?.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
+
+function dragged(e, d) {
+  d.fx = e.x;
+  d.fy = e.y;
+}
+
+function dragended(e, d) {
+  if (!e.active) this.simulation?.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+}
+
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'g' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT') {
+    e.preventDefault();
+    toggleGraphModal();
+  }
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('graph-modal');
+    if (!modal.classList.contains('hidden')) {
+      toggleGraphModal();
+    }
+  }
+});
+</script>
+
+<style>
+ 
+#graph-canvas-mini, #graph-canvas-full {
+  will-change: transform;
+}
+
+.graph-node circle {
+  transition: all 0.3s ease;
+}
+
+.graph-node:hover circle {
+  filter: drop-shadow(0 0 8px currentColor);
+  transform: scale(1.1);
+}
+
+ 
+line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 2s ease forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+</style>
+
 </article>
 
 <script>

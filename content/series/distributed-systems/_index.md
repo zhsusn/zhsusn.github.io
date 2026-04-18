@@ -1,7 +1,12 @@
 ---
 title: "分布式系统架构"
-description: "从理论到实践，系统构建分布式系统知识体系。涵盖一致性模型、微服务架构、云原生实践等核心主题。"
-progress: 25      # 系列完成百分比
-total: 12         # 预计总章节数
-completed: 3      # 已完成章节数
+description: "系统化学习分布式系统"
+progress: 25
+total: 12
+completed: 3
+
+# 图谱配置
+graph:
+  color: "#3b82f6"      # 系列主题色（蓝色）
+  icon: "server"        # 图标标识
 ---

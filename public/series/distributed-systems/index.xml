@@ -13,7 +13,54 @@
       <link>http://localhost:1313/series/distributed-systems/vol-1-foundation/ch-1-hugo-blog/</link>
       <pubDate>Wed, 15 Apr 2026 17:07:00 +0800</pubDate>
       <guid>http://localhost:1313/series/distributed-systems/vol-1-foundation/ch-1-hugo-blog/</guid>
-      <description>从零搭建基于 Hugo &#43; GitHub Pages 的技术博客完整指南，包含自动化部署与主题定制</description>
+      <description>&lt;h2 id=&#34;一技术架构与核心原则&#34;&gt;一、技术架构与核心原则##&lt;/h2&gt;
+&lt;h3 id=&#34;11-架构概览vendored-模式&#34;&gt;1.1 架构概览（Vendored 模式）&lt;/h3&gt;
+&lt;p&gt;本方案采用 &lt;strong&gt;GitHub Actions 自动化构建 + gh-pages 分支托管&lt;/strong&gt; 的完全自动化部署架构，实现&amp;quot;本地编写 → Git 推送 → 自动构建 → 线上生效&amp;quot;的 DevOps 工作流。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;graph LR
+    A[本地 Hugo 源码&amp;lt;br/&amp;gt;main 分支] --&amp;gt;|Push 触发| B[GitHub Actions&amp;lt;br/&amp;gt;自动构建工作流]
+    B --&amp;gt;|生成静态文件| C[gh-pages 分支&amp;lt;br/&amp;gt;纯 HTML/CSS/JS]
+    C --&amp;gt;|Pages 服务读取| D[https://zhsusn.github.io&amp;lt;br/&amp;gt;CDN 加速]
+    
+    style A fill:#e1f5ff,stroke:#333
+    style B fill:#fff4e1,stroke:#333
+    style C fill:#ffcccc,stroke:#333,stroke-width:2px
+    style D fill:#90EE90,stroke:#333,stroke-width:2px
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;12-核心设计原则&#34;&gt;1.2 核心设计原则&lt;/h3&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;原则&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;方案选择&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;技术考量&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;零外部依赖&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;主题直接嵌入仓库（Vendored Mode）&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;避免 submodule 文件缺失、深度克隆失败、网络超时导致的构建不可复现&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;构建自动化&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;GitHub Actions 原生集成&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;利用 &lt;code&gt;GITHUB_TOKEN&lt;/code&gt; 自动权限，无需额外密钥配置&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;内容创作友好&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Obsidian 本地 + Hugo 渲染钩子&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;保留双链笔记习惯，通过渲染层自动转换 WikiLink 为标准 Markdown&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;100% 可复现&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;移除 Hugo Modules&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;避免国内网络环境下模块拉取超时，确保任意环境构建一致性&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;二前置条件与基础设施准备&#34;&gt;二、前置条件与基础设施准备&lt;/h2&gt;
+&lt;h3 id=&#34;21-开发环境要求&#34;&gt;2.1 开发环境要求&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;必需工具安装（Windows 环境）：&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
